@@ -1,10 +1,13 @@
-import { Button, Form, Input, message, Space, Typography } from "antd";
+import { Button, Form, Grid, Input, message, Space, Typography } from "antd";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import api from "src/pkg/api/api";
 
+const { useBreakpoint } = Grid;
+
 export default function SignIn() {
   const [form] = Form.useForm();
+  const screens = useBreakpoint();
 
   const [isSubmit, setIsSubmit] = useState(false);
   const navigate = useNavigate();
@@ -40,7 +43,12 @@ export default function SignIn() {
   };
 
   return (
-    <div className="glass-container" style={{ padding: "3em" }}>
+    <div
+      className="glass-container"
+      style={
+        screens.sm ? { padding: "3em", width: "100%" } : { padding: "3em" }
+      }
+    >
       <Typography.Title
         level={3}
         style={{ marginBottom: "2em", textAlign: "center" }}
