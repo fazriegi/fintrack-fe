@@ -90,6 +90,24 @@ export default function SignUp() {
         >
           <Input.Password />
         </Form.Item>
+        <Form.Item
+          label="Confirm Password"
+          name="confirm_password"
+          dependencies={["password"]}
+          rules={[
+            { required: true, message: "Please confirm your password!" },
+            ({ getFieldValue }) => ({
+              validator(_, value) {
+                if (!value || getFieldValue("password") === value) {
+                  return Promise.resolve();
+                }
+                return Promise.reject(new Error("Passwords do not match!"));
+              },
+            }),
+          ]}
+        >
+          <Input.Password />
+        </Form.Item>
         <Space vertical style={{ width: "100%", textAlign: "center" }}>
           <Typography.Text>
             Already have an account? <Link to="/signin">Sign in!</Link>
