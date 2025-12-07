@@ -16,7 +16,7 @@ export default function Home() {
       if (apiStatus && apiMessage) {
         if (
           apiStatus.includes("Unauthorized") &&
-          apiMessage.includes("sign in to proceed")
+          (apiMessage.includes("sign in to proceed") || apiMessage.includes("invalid or expired token"))
         ) {
           message.error("Unauthorized. Please login again.");
           navigate("/signin");
