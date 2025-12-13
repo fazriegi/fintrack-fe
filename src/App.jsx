@@ -6,7 +6,7 @@ import NotFound from "./pages/NotFound";
 import ProtectedLayout from "./components/ProtectedLayout";
 import Home from "./pages/Home";
 import AppLayout from "./AppLayout";
-import { MENU_ITEMS } from "./menu.config";
+import { MENU_ITEMS } from "./sidebar-menu";
 
 function App() {
   return (
@@ -20,7 +20,7 @@ function App() {
               <Route
                 key={item.key}
                 path={item.key.slice(1)}
-                element={item.element}
+                element={<item.element />}
               />
             ))}
           </Route>

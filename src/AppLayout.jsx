@@ -3,7 +3,7 @@ import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
 import { Button, Layout, Menu, theme } from "antd";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import UserDropdown from "./components/container/UserDropdown";
-import { MENU_ITEMS } from "./menu.config";
+import { MENU_ITEMS } from "./sidebar-menu";
 
 const { Header, Sider, Content } = Layout;
 
@@ -49,7 +49,12 @@ const AppLayout = () => {
           theme="dark"
           mode="inline"
           selectedKeys={[`/${location.pathname.split("/")[1]}`]}
-          items={MENU_ITEMS}
+          items={MENU_ITEMS.map((items) => ({
+            key: items.key,
+            label: items.label,
+            icon: <items.icon />,
+            element: <items.element />,
+          }))}
           onClick={({ key }) => navigate(key)}
         />
       </Sider>
