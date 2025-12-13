@@ -28,6 +28,10 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
+  font-feature-settings: "cv11", "ss01";
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont;
+  -webkit-font-smoothing: antialiased;
+  background: #0e0f12;
 }
 
 h1 {
@@ -52,6 +56,15 @@ button:hover {
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #23262e;
+  border-radius: 4px;
 }
 
 @media (prefers-color-scheme: light) {
