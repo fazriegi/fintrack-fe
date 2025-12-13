@@ -1,17 +1,13 @@
 import React, { useState } from "react";
-import {
-  MenuFoldOutlined,
-  MenuUnfoldOutlined,
-  UploadOutlined,
-  UserOutlined,
-  VideoCameraOutlined,
-} from "@ant-design/icons";
+import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
 import { Button, Layout, Menu, theme } from "antd";
-import UserDropdown from "./UserDropdown";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
+import UserDropdown from "./components/container/UserDropdown";
+import { MENU_ITEMS } from "./menu.config";
 
 const { Header, Sider, Content } = Layout;
 
-const index = () => {
+const AppLayout = () => {
   const [collapsed, setCollapsed] = useState(false);
   const {
     token: { colorBgContainer, borderRadiusLG },
@@ -19,10 +15,22 @@ const index = () => {
 
   const user = JSON.parse(localStorage.getItem("USER") || "null");
   const isLoggedIn = Boolean(user);
-  
+
+  const location = useLocation();
+  const navigate = useNavigate();
+
   return (
     <Layout style={{ minHeight: "100vh" }}>
-      <Sider trigger={null} collapsible collapsed={collapsed}>
+      <Sider
+        trigger={null}
+        collapsible
+        collapsed={collapsed}
+        breakpoint="md"
+        collapsedWidth={0}
+        onBreakpoint={(broken) => {
+          setCollapsed(broken);
+        }}
+      >
         <div
           style={{
             height: 64,
@@ -40,24 +48,9 @@ const index = () => {
         <Menu
           theme="dark"
           mode="inline"
-          defaultSelectedKeys={["1"]}
-          items={[
-            {
-              key: "1",
-              icon: <UserOutlined />,
-              label: "nav 1",
-            },
-            {
-              key: "2",
-              icon: <VideoCameraOutlined />,
-              label: "nav 2",
-            },
-            {
-              key: "3",
-              icon: <UploadOutlined />,
-              label: "nav 3",
-            },
-          ]}
+          selectedKeys={[`/${location.pathname.split("/")[1]}`]}
+          items={MENU_ITEMS}
+          onClick={({ key }) => navigate(key)}
         />
       </Sider>
 
@@ -77,10 +70,7 @@ const index = () => {
             onClick={() => setCollapsed(!collapsed)}
             style={{ fontSize: 16, width: 40, height: 40 }}
           />
-          {isLoggedIn && (
-            <UserDropdown />
-
-          )}
+          {isLoggedIn && <UserDropdown />}
         </Header>
 
         <Content
@@ -92,11 +82,11 @@ const index = () => {
             flex: 1,
           }}
         >
-          <Button>Test</Button>
+          <Outlet />
         </Content>
       </Layout>
     </Layout>
   );
 };
 
-export default index;
+export default AppLayout;
