@@ -1,6 +1,7 @@
 import { Button, Form, Grid, Input, message, Space, Typography } from "antd";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import GlassCard from "src/components/GlassCard";
 import api from "src/pkg/api/api";
 
 const { useBreakpoint } = Grid;
@@ -44,8 +45,7 @@ export default function SignIn() {
 
   return (
     <div className="auth-wrapper">
-      <div
-        className="glass-container"
+      <GlassCard
         style={
           screens.sm
             ? { padding: "4em", width: "20em" }
@@ -84,16 +84,17 @@ export default function SignIn() {
               New here? <Link to="/signup">Create an account!</Link>
             </Typography.Text>
             <Button
-              type="submit"
+              type="primary"
               htmlType="submit"
-              style={{ width: 100, marginTop: "2em" }}
+              style={{ marginTop: "2em" }}
               loading={isSubmit}
+              block
             >
               Sign In
             </Button>
           </Space>
         </Form>
-      </div>
+      </GlassCard>
     </div>
   );
 }
