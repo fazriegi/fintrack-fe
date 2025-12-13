@@ -25,7 +25,6 @@ export default function SignIn() {
 
       if (respBody?.is_success) {
         localStorage.setItem("USER", JSON.stringify(respBody?.data?.user));
-        localStorage.setItem("TOKEN", JSON.stringify(respBody?.data?.token));
         message.success(respBody?.message);
         navigate("/");
       }

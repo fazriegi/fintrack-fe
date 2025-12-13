@@ -3,17 +3,28 @@ import { BASE_URL } from "../constant";
 
 const api = axios.create({
   baseURL: BASE_URL,
-  headers: {
-    "Content-Type": "application/json",
-  },
+  withCredentials: true,
 });
 
-api.interceptors.request.use((config) => {
-  const token = JSON.parse(localStorage.getItem("TOKEN"));
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
+api.interceptors.response.use(
+  (res) => res,
+  async (error) => {
+    const apiStatus = error?.response?.data?.status;
+    const apiMessage = error?.response?.data?.message;
+    if (
+      apiStatus.includes("Unauthorized") &&
+      (apiMessage.includes("sign in to proceed") ||
+        apiMessage.includes("invalid or expired token"))
+    )
+      try {
+        await api.post("/refresh");
+        return api(error.config);
+      } catch {
+        window.location.href = "/login";
+      }
+
+    return Promise.reject(error);
   }
-  return config;
-});
+);
 
 export default api;

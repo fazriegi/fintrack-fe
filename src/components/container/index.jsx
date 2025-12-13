@@ -18,8 +18,7 @@ const index = () => {
   } = theme.useToken();
 
   const user = JSON.parse(localStorage.getItem("USER") || "null");
-  const token = JSON.parse(localStorage.getItem("TOKEN") || "null");
-  const isLoggedIn = Boolean(user) && Boolean(token);
+  const isLoggedIn = Boolean(user);
   
   return (
     <Layout style={{ minHeight: "100vh" }}>

@@ -4,8 +4,9 @@ import {
   SettingOutlined,
   UserOutlined,
 } from "@ant-design/icons";
-import { Avatar, Dropdown, Space, theme, Typography } from "antd";
+import { Avatar, Dropdown, message, Space, theme, Typography } from "antd";
 import { useNavigate } from "react-router-dom";
+import api from "src/pkg/api/api";
 
 const { Text } = Typography;
 
@@ -35,14 +36,25 @@ export default function UserDropdown() {
     },
   ];
 
+  const handleLogout = async () => {
+    try {
+      await api.post("/api/v1/logout");
+    } catch (err) {
+      console.error(err);
+    } finally {
+      localStorage.removeItem("USER");
+      message.success("You have been logged out.");
+      navigate("/login");
+    }
+  };
+
   return (
     <Dropdown
       menu={{
         items,
         onClick: ({ key }) => {
           if (key === "logout") {
-            localStorage.removeItem("USER");
-            navigate("/login");
+            handleLogout();
           }
           if (key === "settings") {
             navigate("/settings");
