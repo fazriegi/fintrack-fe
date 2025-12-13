@@ -39,89 +39,92 @@ export default function SignUp() {
   };
 
   return (
-    <div
-      className="glass-container"
-      style={
-        screens.sm ? { padding: "3em", width: "100%" } : { padding: "3em" }
-      }
-    >
-      <Typography.Title
-        level={3}
-        style={{ marginBottom: "2em", textAlign: "center" }}
+    <div className="auth-wrapper">
+      <div
+        className="glass-container"
+        style={
+          screens.sm
+            ? { padding: "4em", width: "20em" }
+            : { padding: "3em", width: "100%" }
+        }
       >
-        Welcome
-      </Typography.Title>
-      <Form
-        name="signup-form"
-        style={{ marginTop: "2em" }}
-        labelCol={{ span: 8 }}
-        wrapperCol={{ span: 16 }}
-        onFinish={onFinish}
-        form={form}
-      >
-        <Form.Item
-          label="Name"
-          name="name"
-          rules={[{ required: true, message: "Please input your name!" }]}
+        <Typography.Title
+          level={3}
+          style={{ marginBottom: "2em", textAlign: "center" }}
         >
-          <Input type="text" />
-        </Form.Item>
-        <Form.Item
-          label="Username"
-          name="username"
-          rules={[{ required: true, message: "Please input your username!" }]}
+          Welcome
+        </Typography.Title>
+        <Form
+          name="signup-form"
+          style={{ marginTop: "2em" }}
+          layout="vertical"
+          onFinish={onFinish}
+          form={form}
         >
-          <Input maxLength={50} />
-        </Form.Item>
-        <Form.Item
-          label="Email"
-          name="email"
-          rules={[
-            { required: true, message: "Please input your email!" },
-            { type: "email", message: "Invalid email" },
-          ]}
-        >
-          <Input type="email" />
-        </Form.Item>
-        <Form.Item
-          label="Password"
-          name="password"
-          rules={[{ required: true, message: "Please input your password!" }]}
-        >
-          <Input.Password />
-        </Form.Item>
-        <Form.Item
-          label="Confirm Password"
-          name="confirm_password"
-          dependencies={["password"]}
-          rules={[
-            { required: true, message: "Please confirm your password!" },
-            ({ getFieldValue }) => ({
-              validator(_, value) {
-                if (!value || getFieldValue("password") === value) {
-                  return Promise.resolve();
-                }
-                return Promise.reject(new Error("Passwords do not match!"));
-              },
-            }),
-          ]}
-        >
-          <Input.Password />
-        </Form.Item>
-        <Space vertical style={{ width: "100%", textAlign: "center" }}>
-          <Typography.Text>
-            Already have an account? <Link to="/signin">Sign in!</Link>
-          </Typography.Text>
-          <Button
-            type="submit"
-            htmlType="submit"
-            style={{ width: 100, marginTop: "2em" }}
-            loading={isSubmit}
+          <Form.Item
+            label="Name"
+            name="name"
+            rules={[{ required: true, message: "Please input your name!" }]}
           >
-            Sign Up
-          </Button>
-        </Space>
-      </Form>
+            <Input type="text" />
+          </Form.Item>
+          <Form.Item
+            label="Username"
+            name="username"
+            rules={[{ required: true, message: "Please input your username!" }]}
+          >
+            <Input maxLength={50} />
+          </Form.Item>
+          <Form.Item
+            label="Email"
+            name="email"
+            rules={[
+              { required: true, message: "Please input your email!" },
+              { type: "email", message: "Invalid email" },
+            ]}
+          >
+            <Input type="email" />
+          </Form.Item>
+          <Form.Item
+            label="Password"
+            name="password"
+            rules={[{ required: true, message: "Please input your password!" }]}
+          >
+            <Input.Password />
+          </Form.Item>
+          <Form.Item
+            label="Confirm Password"
+            name="confirm_password"
+            dependencies={["password"]}
+            rules={[
+              { required: true, message: "Please confirm your password!" },
+              ({ getFieldValue }) => ({
+                validator(_, value) {
+                  if (!value || getFieldValue("password") === value) {
+                    return Promise.resolve();
+                  }
+                  return Promise.reject(new Error("Passwords do not match!"));
+                },
+              }),
+            ]}
+          >
+            <Input.Password />
+          </Form.Item>
+          <Space vertical style={{ width: "100%", textAlign: "center" }}>
+            <Typography.Text>
+              Already have an account? <Link to="/signin">Sign in!</Link>
+            </Typography.Text>
+            <Button
+              type="submit"
+              htmlType="submit"
+              style={{ width: 100, marginTop: "2em" }}
+              loading={isSubmit}
+            >
+              Sign Up
+            </Button>
+          </Space>
+        </Form>
+      </div>
     </div>
   );
 }

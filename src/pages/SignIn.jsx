@@ -43,54 +43,57 @@ export default function SignIn() {
   };
 
   return (
-    <div
-      className="glass-container"
-      style={
-        screens.sm ? { padding: "3em", width: "100%" } : { padding: "3em" }
-      }
-    >
-      <Typography.Title
-        level={3}
-        style={{ marginBottom: "2em", textAlign: "center" }}
+    <div className="auth-wrapper">
+      <div
+        className="glass-container"
+        style={
+          screens.sm
+            ? { padding: "4em", width: "20em" }
+            : { padding: "3em", width: "100%" }
+        }
       >
-        Welcome Back
-      </Typography.Title>
-      <Form
-        name="signup"
-        style={{ marginTop: "2em" }}
-        labelCol={{ span: 8 }}
-        wrapperCol={{ span: 16 }}
-        onFinish={onFinish}
-        form={form}
-      >
-        <Form.Item
-          label="Username"
-          name="username"
-          rules={[{ required: true, message: "Please input your username!" }]}
+        <Typography.Title
+          level={3}
+          style={{ marginBottom: "2em", textAlign: "center" }}
         >
-          <Input type="text" maxLength={50} />
-        </Form.Item>
-        <Form.Item
-          label="Password"
-          name="password"
-          rules={[{ required: true, message: "Please input your password!" }]}
+          Welcome Back
+        </Typography.Title>
+        <Form
+          name="signup"
+          style={{ marginTop: "2em" }}
+          layout="vertical"
+          onFinish={onFinish}
+          form={form}
         >
-          <Input.Password />
-        </Form.Item>
-        <Space vertical style={{ width: "100%", textAlign: "center" }}>
-          <Typography.Text>
-            New here? <Link to="/signup">Create an account!</Link>
-          </Typography.Text>
-          <Button
-            type="submit"
-            htmlType="submit"
-            style={{ width: 100, marginTop: "2em" }}
-            loading={isSubmit}
+          <Form.Item
+            label="Username"
+            name="username"
+            rules={[{ required: true, message: "Please input your username!" }]}
           >
-            Sign In
-          </Button>
-        </Space>
-      </Form>
+            <Input type="text" maxLength={50} />
+          </Form.Item>
+          <Form.Item
+            label="Password"
+            name="password"
+            rules={[{ required: true, message: "Please input your password!" }]}
+          >
+            <Input.Password />
+          </Form.Item>
+          <Space vertical style={{ width: "100%", textAlign: "center" }}>
+            <Typography.Text>
+              New here? <Link to="/signup">Create an account!</Link>
+            </Typography.Text>
+            <Button
+              type="submit"
+              htmlType="submit"
+              style={{ width: 100, marginTop: "2em" }}
+              loading={isSubmit}
+            >
+              Sign In
+            </Button>
+          </Space>
+        </Form>
+      </div>
     </div>
   );
 }
