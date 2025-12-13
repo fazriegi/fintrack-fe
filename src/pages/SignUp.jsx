@@ -22,7 +22,7 @@ export default function SignUp() {
 
       if (respBody?.is_success) {
         message.success(respBody?.message);
-        navigate("/signin");
+        navigate("/login");
       }
     } catch (err) {
       const apiStatus = err?.response?.data?.status;
@@ -112,7 +112,7 @@ export default function SignUp() {
           </Form.Item>
           <Space vertical style={{ width: "100%", textAlign: "center" }}>
             <Typography.Text>
-              Already have an account? <Link to="/signin">Sign in!</Link>
+              Already have an account? <Link to="/login">Login!</Link>
             </Typography.Text>
             <Button
               type="primary"

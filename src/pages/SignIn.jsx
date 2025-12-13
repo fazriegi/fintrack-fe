@@ -24,7 +24,8 @@ export default function SignIn() {
       const respBody = response?.data;
 
       if (respBody?.is_success) {
-        localStorage.setItem("USER", JSON.stringify(respBody?.data));
+        localStorage.setItem("USER", JSON.stringify(respBody?.data?.user));
+        localStorage.setItem("TOKEN", JSON.stringify(respBody?.data?.token));
         message.success(respBody?.message);
         navigate("/");
       }
@@ -59,7 +60,7 @@ export default function SignIn() {
           Welcome Back
         </Typography.Title>
         <Form
-          name="signup"
+          name="login"
           style={{ marginTop: "2em" }}
           layout="vertical"
           onFinish={onFinish}
@@ -90,7 +91,7 @@ export default function SignIn() {
               loading={isSubmit}
               block
             >
-              Sign In
+              Login
             </Button>
           </Space>
         </Form>

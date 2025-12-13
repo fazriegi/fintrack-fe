@@ -19,7 +19,7 @@ export default function Home() {
           (apiMessage.includes("sign in to proceed") || apiMessage.includes("invalid or expired token"))
         ) {
           message.error("Unauthorized. Please login again.");
-          navigate("/signin");
+          navigate("/login");
           return;
         }
 
