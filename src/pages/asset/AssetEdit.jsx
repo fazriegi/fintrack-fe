@@ -18,6 +18,8 @@ export default function AssetEdit() {
   const onFinish = async (formData) => {
     setIsSubmit(true);
     try {
+      formData.purchase_price = formData.purchase_price ?? 0;
+
       const response = await api.put(`/api/v1/asset/${id}`, formData);
 
       const respBody = response?.data;
