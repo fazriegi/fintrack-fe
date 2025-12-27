@@ -17,7 +17,7 @@ api.interceptors.response.use(
         apiMessage.includes("invalid or expired token"))
     )
       try {
-        await api.post("/refresh");
+        await api.post("/api/v1/refresh-token");
         return api(error.config);
       } catch {
         window.location.href = "/login";
