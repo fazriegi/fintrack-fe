@@ -53,15 +53,12 @@ function ListingTable({ endpoint, columns, ...props }) {
         total: res?.data?.pagination_meta?.total ?? 0,
       }));
     } catch (err) {
-      const apiStatus = err?.response?.data?.status;
-      const apiMessage = err?.response?.data?.message;
+      const apiMessage =
+        err?.response?.data?.message ||
+        err?.message ||
+        "Something went wrong. Please try again.";
 
-      if (apiStatus && apiMessage) {
-        message.error(apiMessage);
-        return;
-      }
-
-      message.error(err?.message || "Something went wrong. Please try again.");
+      message.error(apiMessage);
     } finally {
       setFetchingData(false);
     }
