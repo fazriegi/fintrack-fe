@@ -7,6 +7,7 @@ import ProtectedLayout from "./components/ProtectedLayout";
 import Home from "./pages/Home";
 import AppLayout from "./AppLayout";
 import { MENU_ITEMS } from "./sidebar-menu";
+import { routes } from "./route";
 
 function App() {
   return (
@@ -20,6 +21,14 @@ function App() {
               <Route
                 key={item.key}
                 path={item.key.slice(1)}
+                element={<item.element />}
+              />
+            ))}
+
+            {routes.map((item) => (
+              <Route
+                key={item.path}
+                path={item.path.slice(1)}
                 element={<item.element />}
               />
             ))}
