@@ -69,7 +69,6 @@ export default function AssetForm({
             <Form.Item
               label="Purchase Price"
               name="purchase_price"
-              rules={[{ required: true }]}
             >
               <InputNumeric inputStyle={{ width: 150 }} useCurrency />
             </Form.Item>
