@@ -1,4 +1,4 @@
-import { Button, Tag, Typography } from "antd";
+import { Button, Tag, theme } from "antd";
 import numeral from "numeral";
 import { PlusOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
@@ -6,6 +6,10 @@ import ListingTable from "src/components/ListingTable";
 import PageHeader from "src/components/PageHeader";
 
 export default function Asset() {
+  const {
+    token: { colorPrimary },
+  } = theme.useToken();
+
   const columns = [
     {
       title: "Category",
@@ -20,6 +24,14 @@ export default function Asset() {
       key: "name",
       showSearch: true,
       showSorter: true,
+      render: (_, record) => (
+        <span
+          style={{ cursor: "pointer", color: colorPrimary }}
+          onClick={() => navigate(`/assets/${record.id}`)}
+        >
+          {record.name}
+        </span>
+      ),
     },
     {
       title: "Amount",
