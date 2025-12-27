@@ -62,7 +62,7 @@ export default function Asset() {
       render: (_, { status }) => {
         const colorMap = {
           active: "green",
-          sold: "red",
+          inactive: "red",
           archived: "default",
         };
 

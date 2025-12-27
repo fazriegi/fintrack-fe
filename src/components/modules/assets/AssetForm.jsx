@@ -79,7 +79,7 @@ export default function AssetForm({
             >
               <Radio.Group>
                 <Radio.Button value="active">active</Radio.Button>
-                <Radio.Button value="sold">sold</Radio.Button>
+                <Radio.Button value="inactive">inactive</Radio.Button>
                 <Radio.Button value="archived">archived</Radio.Button>
               </Radio.Group>
             </Form.Item>
