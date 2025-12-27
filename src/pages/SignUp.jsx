@@ -2,7 +2,7 @@ import { Button, Form, Grid, Input, message, Space, Typography } from "antd";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import GlassCard from "src/components/GlassCard";
-import api from "src/pkg/api/api";
+import api from "src/pkg/api";
 
 const { useBreakpoint } = Grid;
 

@@ -6,7 +6,7 @@ import {
 } from "@ant-design/icons";
 import { Avatar, Dropdown, message, Space, theme, Typography } from "antd";
 import { useNavigate } from "react-router-dom";
-import api from "src/pkg/api/api";
+import api from "src/pkg/api";
 
 const { Text } = Typography;
 
