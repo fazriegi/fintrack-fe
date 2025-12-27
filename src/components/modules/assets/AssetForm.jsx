@@ -7,8 +7,8 @@ const { useBreakpoint } = Grid;
 
 export default function AssetForm({
   form,
-  isSubmit,
-  isLoading,
+  isSubmit = false,
+  isLoading = false,
   onFinish,
   breadcrumbs = ["Assets"],
   type = "add",
@@ -52,7 +52,17 @@ export default function AssetForm({
             <Form.Item
               label="Amount"
               name="amount"
-              rules={[{ required: true }]}
+              rules={[
+                { required: true },
+                {
+                  validator: (_, value) =>
+                    value > 0
+                      ? Promise.resolve()
+                      : Promise.reject(
+                          new Error("Amount must be greater than 0")
+                        ),
+                },
+              ]}
             >
               <InputNumeric inputStyle={{ width: 100 }} />
             </Form.Item>
