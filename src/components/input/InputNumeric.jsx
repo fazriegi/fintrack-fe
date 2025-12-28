@@ -1,5 +1,5 @@
 import { InputNumber, Space, theme } from "antd";
-import { CURRENCY, FORMATNUMBER } from "src/pkg/constant";
+import { CURRENCY } from "src/pkg/constant";
 
 const InputNumeric = ({
   label = "",
@@ -56,8 +56,8 @@ const InputNumeric = ({
           <InputNumber
             {...props}
             defaultValue={defaultValue}
-            formatter={FORMATNUMBER}
-            parser={(value) => (value ? value.replace(/[^\d.-]/g, "") : "")}
+            formatter={(value) => new Intl.NumberFormat("en-US").format(value)}
+            parser={(value) => value.replace(/,/g, "")}
             style={{
               width: "100%",
               cursor: "text",
