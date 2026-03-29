@@ -38,7 +38,7 @@ export default function UserDropdown() {
 
   const handleLogout = async () => {
     try {
-      await api.post("/api/v1/logout");
+      await api.post("/v1/logout");
     } catch (err) {
       console.error(err);
     } finally {
