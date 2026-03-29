@@ -16,7 +16,7 @@ export default function SignUp() {
   const onFinish = async (formData) => {
     setIsSubmit(true);
     try {
-      const response = await api.post("/api/v1/register", formData);
+      const response = await api.post("/v1/register", formData);
 
       const respBody = response?.data;
 
@@ -60,17 +60,10 @@ export default function SignUp() {
         >
           <Form.Item
             label="Name"
-            name="name"
+            name="full_name"
             rules={[{ required: true, message: "Please input your name!" }]}
           >
             <Input type="text" />
-          </Form.Item>
-          <Form.Item
-            label="Username"
-            name="username"
-            rules={[{ required: true, message: "Please input your username!" }]}
-          >
-            <Input maxLength={50} />
           </Form.Item>
           <Form.Item
             label="Email"
@@ -85,7 +78,29 @@ export default function SignUp() {
           <Form.Item
             label="Password"
             name="password"
-            rules={[{ required: true, message: "Please input your password!" }]}
+            rules={[
+              { required: true, message: "Please input your password!" },
+              {
+                validator: (_, value) => {
+                  if (!value) {
+                    return Promise.resolve();
+                  }
+
+                  const passwordRegex =
+                    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[?.!@#$%^&*])[A-Za-z\d?.!@#$%^&*]{8,}$/;
+
+                  if (passwordRegex.test(value)) {
+                    return Promise.resolve();
+                  }
+
+                  return Promise.reject(
+                    new Error(
+                      "Password must be at least 8 characters and include uppercase, lowercase, numbers, and a special character (?.!@#$%^&*)",
+                    ),
+                  );
+                },
+              },
+            ]}
           >
             <Input.Password />
           </Form.Item>
