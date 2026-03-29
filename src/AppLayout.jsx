@@ -4,6 +4,7 @@ import { Button, Layout, Menu, theme } from "antd";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import UserDropdown from "./components/container/UserDropdown";
 import { MENU_ITEMS } from "./sidebar-menu";
+import { APP_NAME } from "./pkg/constant";
 
 const { Header, Sider, Content } = Layout;
 
@@ -18,6 +19,8 @@ const AppLayout = () => {
 
   const location = useLocation();
   const navigate = useNavigate();
+
+  const appNameUppercaseOnly = APP_NAME.match(/[A-Z]/g).join('');
 
   return (
     <Layout style={{ minHeight: "100vh" }}>
@@ -43,7 +46,7 @@ const AppLayout = () => {
             fontSize: 18,
           }}
         >
-          {collapsed ? "FT" : "FinTrack"}
+          {collapsed ? appNameUppercaseOnly : APP_NAME}
         </div>
         <Menu
           theme="dark"
