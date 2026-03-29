@@ -71,11 +71,11 @@ export default function UserDropdown() {
             backgroundColor: colorPrimary,
           }}
         >
-          {user?.name?.[0]?.toUpperCase() || <UserOutlined />}
+          {user?.full_name?.[0]?.toUpperCase() || <UserOutlined />}
         </Avatar>
 
         <div style={{ lineHeight: 1.1 }}>
-          <Text strong>{user?.name || "User"}</Text>
+          <Text strong>{user?.full_name || "User"}</Text>
           <br />
           <Text type="secondary" style={{ fontSize: 12 }}>
             {user?.email || ""}
