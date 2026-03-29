@@ -16,8 +16,8 @@ export default function SignIn() {
   const onFinish = async (formData) => {
     setIsSubmit(true);
     try {
-      const response = await api.post("/api/v1/login", {
-        username: formData.username,
+      const response = await api.post("/v1/login", {
+        email: formData.email,
         password: formData.password,
       });
 
@@ -63,11 +63,11 @@ export default function SignIn() {
           form={form}
         >
           <Form.Item
-            label="Username"
-            name="username"
-            rules={[{ required: true, message: "Please input your username!" }]}
+            label="Email"
+            name="email"
+            rules={[{ required: true, message: "Please input your email!" }]}
           >
-            <Input type="text" maxLength={50} />
+            <Input type="email" />
           </Form.Item>
           <Form.Item
             label="Password"
