@@ -34,41 +34,26 @@ export default function Asset() {
       ),
     },
     {
-      title: "Amount",
-      dataIndex: "amount",
-      key: "amount",
+      title: "Current Value",
+      dataIndex: "current_value",
+      key: "current_value",
       showSorter: true,
-    },
-    {
-      title: "Purchase Price",
-      dataIndex: "purchase_price",
-      key: "purchase_price",
-      render: (_, rec) => numeral(rec.purchase_price).format("0,0[.]00"),
-      showSorter: true,
-    },
-    {
-      title: "Total Purchase price",
-      dataIndex: "total_purchase_price",
-      key: "total_purchase_price",
-      showSorter: true,
-      render: (_, rec) => numeral(rec.total_purchase_price).format("0,0[.]00"),
     },
     {
       title: "Status",
       key: "status",
-      dataIndex: "status",
-      showSearch: true,
+      dataIndex: "is_active",
       showSorter: true,
-      render: (_, { status }) => {
+      render: (_, { is_active }) => {
         const colorMap = {
-          active: "green",
-          inactive: "red",
+          true: "green",
+          false: "red",
           archived: "default",
         };
 
         return (
-          <Tag color={colorMap[status] || "default"}>
-            {status.toUpperCase()}
+          <Tag color={colorMap[is_active] || "default"}>
+            {is_active ? "Active" : "Inactive"}
           </Tag>
         );
       },
@@ -96,7 +81,7 @@ export default function Asset() {
         </Button>
       </div>
 
-      <ListingTable columns={columns} endpoint="/api/v1/asset/list" />
+      <ListingTable columns={columns} endpoint="/v1/assets" />
     </>
   );
 }
