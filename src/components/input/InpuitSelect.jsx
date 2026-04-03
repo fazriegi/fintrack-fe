@@ -24,6 +24,7 @@ export default function InputSelect({
         const temp = respBody?.data?.map((item) => ({
           value: item[selectLabel],
           label: item[selectValue],
+          ...item
         }));
         setOptions(temp);
       }
@@ -44,6 +45,12 @@ export default function InputSelect({
       fetchOptions();
     }
   }, []);
+
+  useEffect(() => {
+    if (listOptions && listOptions.length > 0) {
+      setOptions(listOptions);
+    }
+  }, [listOptions]);
 
   return (
     <Select
