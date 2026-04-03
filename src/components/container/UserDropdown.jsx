@@ -6,7 +6,7 @@ import {
 } from "@ant-design/icons";
 import { Avatar, Dropdown, message, Space, theme, Typography } from "antd";
 import { useNavigate } from "react-router-dom";
-import api from "src/pkg/api";
+import { handleLogout } from "src/pkg/global/auth";
 
 const { Text } = Typography;
 
@@ -35,18 +35,6 @@ export default function UserDropdown() {
       danger: true,
     },
   ];
-
-  const handleLogout = async () => {
-    try {
-      await api.post("/v1/logout");
-    } catch (err) {
-      console.error(err);
-    } finally {
-      localStorage.removeItem("USER");
-      message.success("You have been logged out.");
-      navigate("/login");
-    }
-  };
 
   return (
     <Dropdown
