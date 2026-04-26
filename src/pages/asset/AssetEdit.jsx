@@ -1,4 +1,5 @@
 import { Form, App as AntdApp } from "antd";
+import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import AssetForm from "src/components/modules/assets/AssetForm";
@@ -80,9 +81,12 @@ export default function AssetEdit() {
       const response = await api.get(`/v1/assets/${id}`);
 
       const respBody = response?.data;
-
       if (respBody?.is_success) {
-        form.setFieldsValue(respBody.data);
+        const data = respBody.data;
+        if (data.category_type === "physical" && data.details?.purchase_year) {
+          data.details.purchase_year = dayjs(data.details.purchase_year.toString());
+        }
+        form.setFieldsValue(data);
       }
     } catch (err) {
       const apiStatus = err?.response?.data?.status;

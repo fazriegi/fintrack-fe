@@ -47,7 +47,7 @@ export default function AssetForm({
     } else if (formCategoryType === "physical") {
       details = {
         model: details.model || "",
-        purchase_year: details.purchase_year || null,
+        purchase_year: details.purchase_year ? (typeof details.purchase_year === 'object' && typeof details.purchase_year.year === 'function' ? details.purchase_year.year() : parseInt(details.purchase_year, 10)) : null,
         purchase_price: details.purchase_price ?? 0,
       };
     } else {
