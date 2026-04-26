@@ -34,6 +34,7 @@ export default function AssetForm({
     if (assetType === "liquid") {
       details = {
         platform_name: details.platform_name || "",
+        account_name: details.account_name || "",
         account_number: details.account_number || "",
         interest_rate_pa: details.interest_rate_pa ?? 0,
       };
@@ -56,6 +57,7 @@ export default function AssetForm({
 
     onFinish({
       ...values,
+      category_type: assetType,
       current_value: values.current_value ?? 0,
       details,
     });
@@ -129,6 +131,12 @@ export default function AssetForm({
                     <Input placeholder="Bank / Platform" />
                   </Form.Item>
                   <Form.Item
+                    label="Account Name"
+                    name={["details", "account_name"]}
+                  >
+                    <Input placeholder="Account Name" />
+                  </Form.Item>
+                  <Form.Item
                     label="Account Number"
                     name={["details", "account_number"]}
                   >
@@ -153,7 +161,7 @@ export default function AssetForm({
                   </Form.Item>
                   <Form.Item
                     label="Ticker"
-                    name={["details", "ticker"]}
+                    name={["details", "ticker_symbol"]}
                     rules={[{ required: true }]}
                   >
                     <Input placeholder="Ticker / Symbol" />
@@ -172,8 +180,8 @@ export default function AssetForm({
                     <InputNumeric inputStyle={{ width: 120 }} />
                   </Form.Item>
                   <Form.Item
-                    label="Lot Size"
-                    name={["details", "lot_size"]}
+                    label="Quantity"
+                    name={["details", "quantity"]}
                     rules={[
                       {
                         required: true,
