@@ -81,7 +81,7 @@ export default function AssetForm({
             onFinish={handleFinish}
             form={form}
             initialValues={{
-              status: "active",
+              is_active: true,
             }}
           >
             <div style={{ flex: 1 }}>
@@ -108,14 +108,12 @@ export default function AssetForm({
               </Form.Item>
               <Form.Item
                 label="Status"
-                name="status"
+                name="is_active"
                 valuePropName="checked"
                 getValueProps={(value) => ({
-                  checked: value === "active" || value === true,
+                  checked: value,
                 })}
-                getValueFromEvent={(e) =>
-                  e.target.checked ? "active" : "inactive"
-                }
+                getValueFromEvent={(e) => e.target.checked}
                 rules={[{ required: true }]}
               >
                 <Checkbox>Active</Checkbox>
