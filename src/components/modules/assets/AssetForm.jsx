@@ -40,9 +40,9 @@ export default function AssetForm({
     } else if (formCategoryType === "investment") {
       details = {
         platform_name: details.platform_name || "",
-        ticker: details.ticker || "",
+        ticker_symbol: details.ticker_symbol || "",
         average_price: details.average_price ?? 0,
-        lot_size: details.lot_size ?? 0,
+        quantity: details.quantity ?? 0,
       };
     } else if (formCategoryType === "physical") {
       details = {
