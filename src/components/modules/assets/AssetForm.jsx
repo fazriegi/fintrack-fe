@@ -8,7 +8,6 @@ import {
   Checkbox,
   DatePicker,
 } from "antd";
-import { useState } from "react";
 import PageHeader from "src/components/PageHeader";
 import InputSelect from "src/components/input/InpuitSelect";
 import InputNumeric from "src/components/input/InputNumeric";
@@ -26,26 +25,26 @@ export default function AssetForm({
 }) {
   const screens = useBreakpoint();
 
-  const [assetType, setAssetType] = useState();
+  const formCategoryType = Form.useWatch("category_type", form);
 
   const handleFinish = (values) => {
     let details = values.details || {};
 
-    if (assetType === "liquid") {
+    if (formCategoryType === "liquid") {
       details = {
         platform_name: details.platform_name || "",
         account_name: details.account_name || "",
         account_number: details.account_number || "",
         interest_rate_pa: details.interest_rate_pa ?? 0,
       };
-    } else if (assetType === "investment") {
+    } else if (formCategoryType === "investment") {
       details = {
         platform_name: details.platform_name || "",
         ticker: details.ticker || "",
         average_price: details.average_price ?? 0,
         lot_size: details.lot_size ?? 0,
       };
-    } else if (assetType === "physical") {
+    } else if (formCategoryType === "physical") {
       details = {
         model: details.model || "",
         purchase_year: details.purchase_year || null,
@@ -57,7 +56,6 @@ export default function AssetForm({
 
     onFinish({
       ...values,
-      category_type: assetType,
       current_value: values.current_value ?? 0,
       details,
     });
@@ -98,9 +96,12 @@ export default function AssetForm({
                   selectLabel="id"
                   selectValue="name"
                   onChange={(_, opt) => {
-                    setAssetType(opt.base_type);
+                    form.setFieldsValue({ category_type: opt.base_type });
                   }}
                 />
+              </Form.Item>
+              <Form.Item name="category_type" hidden>
+                <Input />
               </Form.Item>
               <Form.Item label="Name" name="name" rules={[{ required: true }]}>
                 <Input placeholder="Name" />
@@ -121,7 +122,7 @@ export default function AssetForm({
                 <Checkbox>Active</Checkbox>
               </Form.Item>
 
-              {assetType === "liquid" && (
+              {formCategoryType === "liquid" && (
                 <>
                   <Form.Item
                     label="Bank / Platform"
@@ -150,7 +151,7 @@ export default function AssetForm({
                   </Form.Item>
                 </>
               )}
-              {assetType === "investment" && (
+              {formCategoryType === "investment" && (
                 <>
                   <Form.Item
                     label="Platform"
@@ -194,7 +195,7 @@ export default function AssetForm({
                   </Form.Item>
                 </>
               )}
-              {assetType === "physical" && (
+              {formCategoryType === "physical" && (
                 <>
                   <Form.Item
                     label="Brand / Model"

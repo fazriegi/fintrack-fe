@@ -1,4 +1,4 @@
-import { ConfigProvider, Form, message, Modal, theme } from "antd";
+import { Form, App as AntdApp } from "antd";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import AssetForm from "src/components/modules/assets/AssetForm";
@@ -7,6 +7,7 @@ import { ExclamationCircleFilled } from "@ant-design/icons";
 
 export default function AssetEdit() {
   const [form] = Form.useForm();
+  const { message, modal } = AntdApp.useApp();
 
   const { id } = useParams();
 
@@ -18,9 +19,7 @@ export default function AssetEdit() {
   const onFinish = async (formData) => {
     setIsSubmit(true);
     try {
-      formData.purchase_price = formData.purchase_price ?? 0;
-
-      const response = await api.put(`/api/v1/asset/${id}`, formData);
+      const response = await api.put(`/v1/assets/${id}`, formData);
 
       const respBody = response?.data;
 
@@ -41,11 +40,7 @@ export default function AssetEdit() {
   };
 
   const onDelete = () => {
-    ConfigProvider.config({
-      theme: { algorithm: theme.darkAlgorithm },
-    });
-
-    Modal.confirm({
+    modal.confirm({
       title: "Are you sure you want to delete this asset?",
       icon: <ExclamationCircleFilled />,
       content: "This action cannot be undone.",
@@ -59,7 +54,7 @@ export default function AssetEdit() {
   const handleDelete = async () => {
     setIsSubmit(true);
     try {
-      const response = await api.delete(`/api/v1/asset/${id}`);
+      const response = await api.delete(`/v1/assets/${id}`);
 
       const respBody = response?.data;
 
@@ -82,7 +77,7 @@ export default function AssetEdit() {
   const fetchData = async () => {
     setIsLoading(true);
     try {
-      const response = await api.get(`/api/v1/asset/${id}`);
+      const response = await api.get(`/v1/assets/${id}`);
 
       const respBody = response?.data;
 

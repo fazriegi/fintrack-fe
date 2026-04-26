@@ -1,4 +1,4 @@
-import { Form, message } from "antd";
+import { Form, App as AntdApp } from "antd";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AssetForm from "src/components/modules/assets/AssetForm";
@@ -6,6 +6,7 @@ import api from "src/pkg/api";
 
 export default function AssetAdd() {
   const [form] = Form.useForm();
+  const { message } = AntdApp.useApp();
 
   const [isSubmit, setIsSubmit] = useState(false);
 
