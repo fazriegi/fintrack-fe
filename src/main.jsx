@@ -87,6 +87,10 @@ createRoot(document.getElementById("root")).render(
           // ==========================================
           // AREA SEMUA JENIS INPUT
           // ==========================================
+          Checkbox: {
+            colorBorder: "#767676ff",
+            borderRadiusSM: 4,
+          },
           Input: {
             ...commonInputTokens,
           },

@@ -14,9 +14,7 @@ export default function AssetAdd() {
   const onFinish = async (formData) => {
     setIsSubmit(true);
     try {
-      formData.purchase_price = formData.purchase_price ?? 0;
-
-      const response = await api.post("/api/v1/asset/submit", formData);
+      const response = await api.post("/v1/assets", formData);
 
       const respBody = response?.data;
 

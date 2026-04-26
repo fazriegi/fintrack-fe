@@ -88,6 +88,8 @@ const AppLayout = () => {
             background: colorBgContainer,
             borderRadius: borderRadiusLG,
             flex: 1,
+            display: "flex",
+            flexDirection: "column",
           }}
         >
           <Outlet />

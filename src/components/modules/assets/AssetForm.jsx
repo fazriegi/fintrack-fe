@@ -1,4 +1,14 @@
-import { Affix, Button, Form, Grid, Input, Radio, Skeleton } from "antd";
+import {
+  Affix,
+  Button,
+  Form,
+  Grid,
+  Input,
+  Skeleton,
+  Checkbox,
+  DatePicker,
+} from "antd";
+import { useState } from "react";
 import PageHeader from "src/components/PageHeader";
 import InputSelect from "src/components/input/InpuitSelect";
 import InputNumeric from "src/components/input/InputNumeric";
@@ -16,6 +26,41 @@ export default function AssetForm({
 }) {
   const screens = useBreakpoint();
 
+  const [assetType, setAssetType] = useState();
+
+  const handleFinish = (values) => {
+    let details = values.details || {};
+
+    if (assetType === "liquid") {
+      details = {
+        platform_name: details.platform_name || "",
+        account_number: details.account_number || "",
+        interest_rate_pa: details.interest_rate_pa ?? 0,
+      };
+    } else if (assetType === "investment") {
+      details = {
+        platform_name: details.platform_name || "",
+        ticker: details.ticker || "",
+        average_price: details.average_price ?? 0,
+        lot_size: details.lot_size ?? 0,
+      };
+    } else if (assetType === "physical") {
+      details = {
+        model: details.model || "",
+        purchase_year: details.purchase_year || null,
+        purchase_price: details.purchase_price ?? 0,
+      };
+    } else {
+      details = {};
+    }
+
+    onFinish({
+      ...values,
+      current_value: values.current_value ?? 0,
+      details,
+    });
+  };
+
   return (
     <>
       {isLoading ? (
@@ -25,64 +70,155 @@ export default function AssetForm({
           <PageHeader breadCrumb={breadcrumbs} backUrl />
           <Form
             name="asset-add"
-            style={{ marginTop: "2em" }}
+            style={{
+              marginTop: "2em",
+              flex: 1,
+              display: "flex",
+              flexDirection: "column",
+            }}
             labelCol={{ span: 8 }}
             wrapperCol={{ span: 8 }}
-            onFinish={onFinish}
+            onFinish={handleFinish}
             form={form}
             initialValues={{
               status: "active",
             }}
           >
-            <Form.Item
-              label="Category"
-              name="category_id"
-              rules={[{ required: true }]}
-            >
-              <InputSelect
-                datasource="/api/v1/asset/list-category"
-                placeholder="Choose One"
-                selectLabel="id"
-                selectValue="name"
-              />
-            </Form.Item>
-            <Form.Item label="Name" name="name" rules={[{ required: true }]}>
-              <Input placeholder="Name" />
-            </Form.Item>
-            <Form.Item
-              label="Amount"
-              name="amount"
-              rules={[
-                { required: true },
-                {
-                  validator: (_, value) =>
-                    value > 0
-                      ? Promise.resolve()
-                      : Promise.reject(
-                          new Error("Amount must be greater than 0")
-                        ),
-                },
-              ]}
-            >
-              <InputNumeric inputStyle={{ width: 100 }} />
-            </Form.Item>
-            <Form.Item
-              label="Purchase Price"
-              name="purchase_price"
-            >
-              <InputNumeric inputStyle={{ width: 150 }} useCurrency />
-            </Form.Item>
-            <Form.Item
-              label="Status"
-              name="status"
-              rules={[{ required: true }]}
-            >
-              <Radio.Group>
-                <Radio.Button value="active">active</Radio.Button>
-                <Radio.Button value="inactive">inactive</Radio.Button>
-                <Radio.Button value="archived">archived</Radio.Button>
-              </Radio.Group>
-            </Form.Item>
+            <div style={{ flex: 1 }}>
+              <Form.Item
+                label="Category"
+                name="category_id"
+                rules={[{ required: true }]}
+              >
+                <InputSelect
+                  datasource="/v1/assets/categories"
+                  placeholder="Choose One"
+                  selectLabel="id"
+                  selectValue="name"
+                  onChange={(_, opt) => {
+                    setAssetType(opt.base_type);
+                  }}
+                />
+              </Form.Item>
+              <Form.Item label="Name" name="name" rules={[{ required: true }]}>
+                <Input placeholder="Name" />
+              </Form.Item>
+              <Form.Item label="Current Value" name="current_value">
+                <InputNumeric inputStyle={{ width: 100 }} />
+              </Form.Item>
+              <Form.Item
+                label="Status"
+                name="status"
+                valuePropName="checked"
+                getValueProps={(value) => ({
+                  checked: value === "active" || value === true,
+                })}
+                getValueFromEvent={(e) =>
+                  e.target.checked ? "active" : "inactive"
+                }
+                rules={[{ required: true }]}
+              >
+                <Checkbox>Active</Checkbox>
+              </Form.Item>
+
+              {assetType === "liquid" && (
+                <>
+                  <Form.Item
+                    label="Bank / Platform"
+                    name={["details", "platform_name"]}
+                    rules={[{ required: true }]}
+                  >
+                    <Input placeholder="Bank / Platform" />
+                  </Form.Item>
+                  <Form.Item
+                    label="Account Number"
+                    name={["details", "account_number"]}
+                  >
+                    <Input placeholder="Account Number" />
+                  </Form.Item>
+                  <Form.Item
+                    label="Interest Rate PA (%)"
+                    name={["details", "interest_rate_pa"]}
+                  >
+                    <InputNumeric inputStyle={{ width: 60 }} />
+                  </Form.Item>
+                </>
+              )}
+              {assetType === "investment" && (
+                <>
+                  <Form.Item
+                    label="Platform"
+                    name={["details", "platform_name"]}
+                    rules={[{ required: true }]}
+                  >
+                    <Input placeholder="Platform" />
+                  </Form.Item>
+                  <Form.Item
+                    label="Ticker"
+                    name={["details", "ticker"]}
+                    rules={[{ required: true }]}
+                  >
+                    <Input placeholder="Ticker / Symbol" />
+                  </Form.Item>
+                  <Form.Item
+                    label="Average Price"
+                    name={["details", "average_price"]}
+                    rules={[
+                      {
+                        required: true,
+                        pattern: /^\d+$/,
+                        message: "Please enter a valid number",
+                      },
+                    ]}
+                  >
+                    <InputNumeric inputStyle={{ width: 120 }} />
+                  </Form.Item>
+                  <Form.Item
+                    label="Lot Size"
+                    name={["details", "lot_size"]}
+                    rules={[
+                      {
+                        required: true,
+                        pattern: /^\d+$/,
+                        message: "Please enter a valid number",
+                      },
+                    ]}
+                  >
+                    <InputNumeric inputStyle={{ width: 60 }} />
+                  </Form.Item>
+                </>
+              )}
+              {assetType === "physical" && (
+                <>
+                  <Form.Item
+                    label="Brand / Model"
+                    name={["details", "model"]}
+                    rules={[{ required: true }]}
+                  >
+                    <Input placeholder="Brand / Model" />
+                  </Form.Item>
+                  <Form.Item
+                    label="Purchase Year"
+                    name={["details", "purchase_year"]}
+                  >
+                    <DatePicker picker="year" placeholder="Purchase Year" />
+                  </Form.Item>
+                  <Form.Item
+                    label="Purchase Price"
+                    name={["details", "purchase_price"]}
+                    rules={[
+                      {
+                        required: true,
+                        pattern: /^\d+$/,
+                        message: "Please enter a valid number",
+                      },
+                    ]}
+                  >
+                    <InputNumeric inputStyle={{ width: 120 }} />
+                  </Form.Item>
+                </>
+              )}
+            </div>
 
             <Affix offsetBottom={50} style={{ marginTop: "3em" }}>
               <div
