@@ -79,3 +79,7 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+th.ant-table-cell {
+  text-align: center !important;
+}

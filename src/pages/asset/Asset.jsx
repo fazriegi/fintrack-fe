@@ -38,12 +38,16 @@ export default function Asset() {
       dataIndex: "current_value",
       key: "current_value",
       showSorter: true,
+      align: "right",
+      render: (_, record) => numeral(record.current_value).format("0,0"),
     },
     {
       title: "Status",
       key: "status",
       dataIndex: "is_active",
       showSorter: true,
+      align: "center",
+      width: "10%",
       render: (_, { is_active }) => {
         const colorMap = {
           true: "green",
