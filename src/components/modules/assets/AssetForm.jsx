@@ -149,12 +149,11 @@ export default function AssetForm({
                   >
                     <Input placeholder="Account Number" />
                   </Form.Item>
-                  <Form.Item
-                    label="Interest Rate"
-                    name={["details", "interest_rate_pa"]}
-                  >
+                  <Form.Item label="Interest Rate">
                     <Space>
-                      <InputNumeric inputStyle={{ width: 60 }} />
+                      <Form.Item name={["details", "interest_rate_pa"]} noStyle>
+                        <InputNumeric inputStyle={{ width: 60 }} />
+                      </Form.Item>
                       <span>% P.A</span>
                     </Space>
                   </Form.Item>
