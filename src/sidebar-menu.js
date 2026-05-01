@@ -1,5 +1,6 @@
-import { BankOutlined, HomeOutlined } from "@ant-design/icons";
+import { BankOutlined, HomeOutlined, SolutionOutlined } from "@ant-design/icons";
 import Asset from "./pages/asset/Asset";
+import Liability from "./pages/liability";
 import Home from "./pages/Home";
 
 export const MENU_ITEMS = [
@@ -14,5 +15,11 @@ export const MENU_ITEMS = [
     label: "Assets",
     icon: BankOutlined,
     element: Asset,
+  },
+  {
+    key: "/liabilities",
+    label: "Liabilities",
+    icon: SolutionOutlined,
+    element: Liability,
   },
 ];
