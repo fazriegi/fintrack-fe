@@ -7,6 +7,7 @@ import {
   Skeleton,
   Checkbox,
   DatePicker,
+  Space,
 } from "antd";
 import PageHeader from "src/components/PageHeader";
 import InputSelect from "src/components/input/InpuitSelect";
@@ -47,7 +48,12 @@ export default function AssetForm({
     } else if (formCategoryType === "physical") {
       details = {
         model: details.model || "",
-        purchase_year: details.purchase_year ? (typeof details.purchase_year === 'object' && typeof details.purchase_year.year === 'function' ? details.purchase_year.year() : parseInt(details.purchase_year, 10)) : null,
+        purchase_year: details.purchase_year
+          ? typeof details.purchase_year === "object" &&
+            typeof details.purchase_year.year === "function"
+            ? details.purchase_year.year()
+            : parseInt(details.purchase_year, 10)
+          : null,
         purchase_price: details.purchase_price ?? 0,
       };
     } else {
@@ -144,10 +150,13 @@ export default function AssetForm({
                     <Input placeholder="Account Number" />
                   </Form.Item>
                   <Form.Item
-                    label="Interest Rate PA (%)"
+                    label="Interest Rate"
                     name={["details", "interest_rate_pa"]}
                   >
-                    <InputNumeric inputStyle={{ width: 60 }} />
+                    <Space>
+                      <InputNumeric inputStyle={{ width: 60 }} />
+                      <span>% P.A</span>
+                    </Space>
                   </Form.Item>
                 </>
               )}
