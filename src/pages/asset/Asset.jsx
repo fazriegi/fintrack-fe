@@ -1,4 +1,5 @@
-import { Button, Tag, theme } from "antd";
+import { useState, useMemo } from "react";
+import { Button, Tag, theme, Segmented } from "antd";
 import numeral from "numeral";
 import { PlusOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
@@ -9,6 +10,14 @@ export default function Asset() {
   const {
     token: { colorPrimary },
   } = theme.useToken();
+
+  const [filterStatus, setFilterStatus] = useState("active");
+
+  const extraParams = useMemo(() => {
+    if (filterStatus === "active") return { is_active: true };
+    if (filterStatus === "inactive") return { is_active: false };
+    return {};
+  }, [filterStatus]);
 
   const columns = [
     {
@@ -76,16 +85,36 @@ export default function Asset() {
       <div
         style={{
           display: "flex",
-          justifyContent: "flex-end",
+          justifyContent: "space-between",
+          alignItems: "center",
           marginBottom: "1em",
+          flexWrap: "wrap",
+          gap: "1em",
         }}
       >
+        <Segmented
+          options={[
+            { label: "Active", value: "active" },
+            { label: "Inactive", value: "inactive" },
+            { label: "All", value: "all" },
+          ]}
+          value={filterStatus}
+          onChange={setFilterStatus}
+          style={{
+            padding: "4px",
+            borderRadius: "8px",
+          }}
+        />
         <Button type="primary" icon={<PlusOutlined />} onClick={handleAdd}>
           Add
         </Button>
       </div>
 
-      <ListingTable columns={columns} endpoint="/v1/assets" />
+      <ListingTable
+        columns={columns}
+        endpoint="/v1/assets"
+        extraParams={extraParams}
+      />
     </>
   );
 }

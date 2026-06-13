@@ -11,7 +11,7 @@ const getApiParam = (params) => ({
   ...params,
 });
 
-function ListingTable({ endpoint, columns, ...props }) {
+function ListingTable({ endpoint, columns, extraParams, ...props }) {
   const {
     token: { colorPrimary },
   } = theme.useToken();
@@ -35,6 +35,7 @@ function ListingTable({ endpoint, columns, ...props }) {
 
       const apiParams = {
         ...getApiParam(params),
+        ...extraParams,
       };
 
       delete apiParams["total"];
@@ -158,8 +159,10 @@ function ListingTable({ endpoint, columns, ...props }) {
   });
 
   useEffect(() => {
-    getData(tableParams);
-  }, []);
+    const newParams = { ...tableParams, page: 1 };
+    setTableParams(newParams);
+    getData(newParams);
+  }, [JSON.stringify(extraParams)]);
 
   const cols = useMemo(() => {
     const colsCopy = [...columns];

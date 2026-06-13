@@ -1,4 +1,5 @@
-import { Button, Tag, theme } from "antd";
+import { useState, useMemo } from "react";
+import { Button, Tag, theme, Segmented } from "antd";
 import numeral from "numeral";
 import { PlusOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
@@ -9,6 +10,14 @@ export default function index() {
   const {
     token: { colorPrimary },
   } = theme.useToken();
+
+  const [filterStatus, setFilterStatus] = useState("active");
+
+  const extraParams = useMemo(() => {
+    if (filterStatus === "active") return { is_active: true };
+    if (filterStatus === "paid") return { is_active: false };
+    return {};
+  }, [filterStatus]);
 
   const columns = [
     {
@@ -41,6 +50,22 @@ export default function index() {
       align: "right",
       render: (_, record) => numeral(record.remaining_balance).format("0,0"),
     },
+    {
+      title: "Status",
+      key: "status",
+      dataIndex: "remaining_balance",
+      showSorter: true,
+      align: "center",
+      width: "15%",
+      render: (_, record) => {
+        const isActive = Number(record.remaining_balance) > 0;
+        return (
+          <Tag color={isActive ? "warning" : "success"}>
+            {isActive ? "Active" : "Paid"}
+          </Tag>
+        );
+      },
+    },
   ];
 
   const navigate = useNavigate();
@@ -55,16 +80,36 @@ export default function index() {
       <div
         style={{
           display: "flex",
-          justifyContent: "flex-end",
+          justifyContent: "space-between",
+          alignItems: "center",
           marginBottom: "1em",
+          flexWrap: "wrap",
+          gap: "1em",
         }}
       >
+        <Segmented
+          options={[
+            { label: "Active", value: "active" },
+            { label: "Paid", value: "paid" },
+            { label: "All", value: "all" },
+          ]}
+          value={filterStatus}
+          onChange={setFilterStatus}
+          style={{
+            padding: "4px",
+            borderRadius: "8px",
+          }}
+        />
         <Button type="primary" icon={<PlusOutlined />} onClick={handleAdd}>
           Add
         </Button>
       </div>
 
-      <ListingTable columns={columns} endpoint="/v1/liabilities" />
+      <ListingTable
+        columns={columns}
+        endpoint="/v1/liabilities"
+        extraParams={extraParams}
+      />
     </>
   );
 }
