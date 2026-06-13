@@ -115,14 +115,26 @@ export default function LiabilityForm({
               <Form.Item
                 label="Principal Amount"
                 name="principal_amount"
-                rules={[{ required: true }]}
+                rules={[
+                  {
+                    required: true,
+                    pattern: /^\d+$/,
+                    message: "Please enter a valid number",
+                  },
+                ]}
               >
                 <InputNumeric inputStyle={{ width: 100 }} />
               </Form.Item>
               <Form.Item
                 label="Remaining Balance"
                 name="remaining_balance"
-                rules={[{ required: true }]}
+                rules={[
+                  {
+                    required: true,
+                    pattern: /^\d+$/,
+                    message: "Please enter a valid number",
+                  },
+                ]}
               >
                 <InputNumeric inputStyle={{ width: 100 }} />
               </Form.Item>
@@ -132,6 +144,12 @@ export default function LiabilityForm({
                   <Form.Item
                     label="Credit Limit"
                     name={["details", "credit_limit"]}
+                    rules={[
+                      {
+                        pattern: /^\d+$/,
+                        message: "Please enter a valid number",
+                      },
+                    ]}
                   >
                     <InputNumeric inputStyle={{ width: 100 }} />
                   </Form.Item>
