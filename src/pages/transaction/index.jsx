@@ -61,31 +61,18 @@ export default function TransactionPage() {
     return params;
   }, [filterType, selectedDate, selectedRange]);
 
-  // Fetch all transactions in the current period to calculate the accurate summary stats
   const fetchSummaryStats = async () => {
     try {
       const params = {
         ...extraParams,
       };
-      const res = await api.get("/v1/transactions", { params });
-      const txs = res.data?.data || [];
-
-      let totalIncome = 0;
-      let totalExpense = 0;
-
-      txs.forEach((tx) => {
-        const amount = Number(tx.amount) || 0;
-        if (tx.category_type === "income") {
-          totalIncome += amount;
-        } else if (tx.category_type === "expense") {
-          totalExpense += amount;
-        }
-      });
+      const res = await api.get("/v1/transactions/summary", { params });
+      const summary = res.data?.data || { income: 0, expense: 0, net: 0 };
 
       setStats({
-        income: totalIncome,
-        expense: totalExpense,
-        net: totalIncome - totalExpense,
+        income: Number(summary.income) || 0,
+        expense: Number(summary.expense) || 0,
+        net: Number(summary.net) || 0,
       });
     } catch (err) {
       console.error("Failed to load summary statistics:", err);
