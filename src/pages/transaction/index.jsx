@@ -29,8 +29,12 @@ import api from "src/pkg/api";
 
 export default function TransactionPage() {
   const { message } = App.useApp();
-  const [filterType, setFilterType] = useState("month"); // "week" | "month" | "year" | "all"
+  const [filterType, setFilterType] = useState("month"); // "week" | "month" | "year" | "range" | "all"
   const [selectedDate, setSelectedDate] = useState(dayjs());
+  const [selectedRange, setSelectedRange] = useState([
+    dayjs().startOf("month"),
+    dayjs().endOf("month"),
+  ]);
 
   const [formOpen, setFormOpen] = useState(false);
   const [selectedTxId, setSelectedTxId] = useState(null);
@@ -43,12 +47,19 @@ export default function TransactionPage() {
     const params = {};
     if (filterType !== "all") {
       params.filter_type = filterType;
-      params.date = selectedDate
-        ? selectedDate.format("YYYY-MM-DD")
-        : dayjs().format("YYYY-MM-DD");
+      if (filterType === "range") {
+        if (selectedRange && selectedRange[0] && selectedRange[1]) {
+          params.start_date = selectedRange[0].format("YYYY-MM-DD");
+          params.end_date = selectedRange[1].format("YYYY-MM-DD");
+        }
+      } else {
+        params.date = selectedDate
+          ? selectedDate.format("YYYY-MM-DD")
+          : dayjs().format("YYYY-MM-DD");
+      }
     }
     return params;
-  }, [filterType, selectedDate]);
+  }, [filterType, selectedDate, selectedRange]);
 
   // Fetch all transactions in the current period to calculate the accurate summary stats
   const fetchSummaryStats = async () => {
@@ -262,6 +273,7 @@ export default function TransactionPage() {
               { label: "Week", value: "week" },
               { label: "Month", value: "month" },
               { label: "Year", value: "year" },
+              { label: "Range", value: "range" },
               { label: "All", value: "all" },
             ]}
             value={filterType}
@@ -269,14 +281,21 @@ export default function TransactionPage() {
             style={{ padding: "4px", borderRadius: "8px" }}
           />
 
-          {filterType !== "all" && (
-            <DatePicker
-              picker={filterType}
-              value={selectedDate}
-              onChange={(date) => setSelectedDate(date)}
-              allowClear={false}
-            />
-          )}
+          {filterType !== "all" &&
+            (filterType === "range" ? (
+              <DatePicker.RangePicker
+                value={selectedRange}
+                onChange={(dates) => setSelectedRange(dates)}
+                allowClear={false}
+              />
+            ) : (
+              <DatePicker
+                picker={filterType}
+                value={selectedDate}
+                onChange={(date) => setSelectedDate(date)}
+                allowClear={false}
+              />
+            ))}
         </div>
 
         <div style={{ display: "flex", gap: "8px" }}>
