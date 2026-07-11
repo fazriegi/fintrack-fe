@@ -1,8 +1,8 @@
-# FinTrack FE
+# NetBase FE
 
-###### FinTrack FE
+###### NetBase FE
 
-FinTrack FE is a frontend application for managing assets, liabilities, and personal finance tracking with a minimalist and user-friendly interface.
+NetBase FE is a frontend application for managing assets, liabilities, and personal finance tracking with a minimalist and user-friendly interface.
 
 ## Technology Stack
 
@@ -19,12 +19,12 @@ FinTrack FE is a frontend application for managing assets, liabilities, and pers
 
 ## Installation
 
-Follow these steps to install and run FinTrack on your local machine:
+Follow these steps to install and run NetBase on your local machine:
 
 1. **Clone the repository:**
 
    ```bash
-   git clone https://github.com/fazriegi/fintrack-fe.git <your_project_name>
+   git clone https://github.com/fazriegi/netbase-fe.git <your_project_name>
    ```
 
 2. **Move to cloned repository folder**

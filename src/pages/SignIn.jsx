@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import GlassCard from "src/components/GlassCard";
 import api from "src/pkg/api";
+import { APP_NAME } from "src/pkg/constant";
 
 const { useBreakpoint } = Grid;
 
@@ -55,8 +56,8 @@ export default function SignIn() {
           }}
         >
           <img
-            src="/fintrack.svg"
-            alt="FinTrack Logo"
+            src="/logo.svg"
+            alt="NetBase Logo"
             style={{ width: 64, height: 64, marginBottom: "0.5em" }}
           />
           <Typography.Title
@@ -64,12 +65,12 @@ export default function SignIn() {
             style={{
               margin: 0,
               fontWeight: 600,
-              background: "linear-gradient(135deg, #0ea5e9 0%, #10b981 100%)",
+              background: "linear-gradient(135deg, #2563eb 0%, #06b6d4 100%)",
               WebkitBackgroundClip: "text",
               WebkitTextFillColor: "transparent",
             }}
           >
-            FinTrack
+            {APP_NAME}
           </Typography.Title>
           <Typography.Text type="secondary" style={{ marginTop: "0.25em" }}>
             Welcome back! Please login to your account.

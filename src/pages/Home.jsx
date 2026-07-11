@@ -19,7 +19,7 @@ export default function Home() {
   const { message } = AntdApp.useApp();
 
   const [showValue, setShowValue] = useState(() => {
-    const saved = localStorage.getItem("fintrack_show_value");
+    const saved = localStorage.getItem("netbase_show_value");
     return saved !== null ? JSON.parse(saved) : true;
   });
 
@@ -27,7 +27,7 @@ export default function Home() {
   const [networth, setNetworth] = useState(null);
 
   useEffect(() => {
-    localStorage.setItem("fintrack_show_value", JSON.stringify(showValue));
+    localStorage.setItem("netbase_show_value", JSON.stringify(showValue));
   }, [showValue]);
 
   const fetchData = async () => {

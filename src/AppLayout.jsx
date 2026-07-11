@@ -21,7 +21,7 @@ const AppLayout = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const appNameUppercaseOnly = APP_NAME.match(/[A-Z]/g).join('');
+  const appNameUppercaseOnly = APP_NAME.match(/[A-Z]/g).join("");
 
   const screens = useBreakpoint();
   const isMobile = screens.md === false;
@@ -49,11 +49,11 @@ const AppLayout = () => {
       }}
     >
       <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-        <img src="/fintrack.svg" alt="Logo" style={{ width: 32, height: 32 }} />
+        <img src="/logo.svg" alt="Logo" style={{ width: 32, height: 32 }} />
         {(!collapsed || isMobile) && (
           <span
             style={{
-              background: "linear-gradient(135deg, #0ea5e9 0%, #10b981 100%)",
+              background: "linear-gradient(135deg, #2563eb 0%, #06b6d4 100%)",
               WebkitBackgroundClip: "text",
               WebkitTextFillColor: "transparent",
             }}

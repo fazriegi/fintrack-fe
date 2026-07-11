@@ -8,8 +8,8 @@ import { ConfigProvider, theme, App as AntdApp } from "antd";
 const commonInputTokens = {
   colorBgContainer: "#0E0F12",
   colorBorder: "#23262E",
-  activeBorderColor: "#6B8AFB",
-  hoverBorderColor: "#4A6CF7",
+  activeBorderColor: "#2563eb",
+  hoverBorderColor: "#3b82f6",
 };
 
 createRoot(document.getElementById("root")).render(
@@ -24,7 +24,7 @@ createRoot(document.getElementById("root")).render(
           colorBgElevated: "#1E2128",
 
           // --- Brand & Functional Colors ---
-          colorPrimary: "#6B8AFB",
+          colorPrimary: "#2563eb",
           colorSuccess: "#10B981",
           colorError: "#EF4444",
           colorWarning: "#F59E0B",
@@ -53,7 +53,7 @@ createRoot(document.getElementById("root")).render(
             darkItemBg: "transparent",
             darkItemHoverBg: "#15171C",
             darkItemSelectedBg: "#1A1D24",
-            darkItemSelectedColor: "#6B8AFB",
+            darkItemSelectedColor: "#2563eb",
           },
 
           Button: {

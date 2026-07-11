@@ -12,7 +12,7 @@ COPY . .
 
 # Build-time environment variables for Vite
 ARG VITE_BASE_URL=http://localhost:8080
-ARG VITE_APP_NAME=FinTrack
+ARG VITE_APP_NAME=NetBase
 
 ENV VITE_BASE_URL=$VITE_BASE_URL
 ENV VITE_APP_NAME=$VITE_APP_NAME
