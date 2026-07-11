@@ -53,6 +53,48 @@ Follow these steps to install and run FinTrack on your local machine:
    npm run dev
    ```
 
+## Running with Docker (Recommended)
+
+You can run the frontend application inside a container served via an optimized Nginx server using Docker and Docker Compose.
+
+### Prerequisites
+
+Make sure you have [Docker](https://docs.docker.com/get-docker/) and [Docker Compose](https://docs.docker.com/compose/install/) installed.
+
+### Steps to Run
+
+1. **Copy `.env.example` to `.env`:**
+   ```bash
+   cp .env.example .env
+   ```
+
+2. **Configure your `.env`:**
+   Adjust `VITE_BASE_URL` (points to the backend API), `VITE_APP_NAME`, and `PORT` (the port on your host machine to access the frontend, default: `3000`).
+
+3. **Build and start the container:**
+   ```bash
+   docker compose up --build -d
+   ```
+   *Note: This will read the `.env` variables, pass them as build arguments to compile the production static files, and serve them via a lightweight Nginx container.*
+
+4. **Access the application:**
+   Open your browser and navigate to `http://localhost:<PORT>` (e.g. `http://localhost:3000`).
+
+5. **Check container status:**
+   ```bash
+   docker compose ps
+   ```
+
+6. **View logs:**
+   ```bash
+   docker compose logs -f
+   ```
+
+7. **Stop the container:**
+   ```bash
+   docker compose down
+   ```
+
 ## Author
 
 Fazri Egi - [Github](https://github.com/fazriegi)
