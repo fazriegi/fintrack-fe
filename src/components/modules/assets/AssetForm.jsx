@@ -101,6 +101,7 @@ export default function AssetForm({
                   placeholder="Choose One"
                   selectLabel="id"
                   selectValue="name"
+                  disabled={type === "edit"}
                   onChange={(_, opt) => {
                     form.setFieldsValue({ category_type: opt.base_type });
                   }}
