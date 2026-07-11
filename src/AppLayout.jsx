@@ -44,9 +44,21 @@ const AppLayout = () => {
             color: "#fff",
             fontWeight: 600,
             fontSize: 18,
+            gap: "12px",
           }}
         >
-          {collapsed ? appNameUppercaseOnly : APP_NAME}
+          <img src="/fintrack.svg" alt="Logo" style={{ width: 32, height: 32 }} />
+          {!collapsed && (
+            <span
+              style={{
+                background: "linear-gradient(135deg, #0ea5e9 0%, #10b981 100%)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+              }}
+            >
+              {APP_NAME}
+            </span>
+          )}
         </div>
         <Menu
           theme="dark"

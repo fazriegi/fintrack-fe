@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none">
+  <defs>
+    <linearGradient id="fintrackGrad" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#0ea5e9" />
+      <stop offset="100%" stop-color="#10b981" />
+    </linearGradient>
+  </defs>
+  <!-- Lingkaran luar/Koin pelacak -->
+  <path d="M27 16C27 22.0751 22.0751 27 16 27C9.92487 27 5 22.0751 5 16C5 9.92487 9.92487 5 16 5C19.5 5 22.6 6.6 24.7 9" stroke="url(#fintrackGrad)" stroke-width="3.5" stroke-linecap="round" />
+  <!-- Grafik panah pertumbuhan finansial -->
+  <path d="M11 18L15 14L19 17L25 10M25 10H20M25 10V15" stroke="url(#fintrackGrad)" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" />
+</svg>

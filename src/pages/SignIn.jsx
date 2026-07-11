@@ -49,12 +49,15 @@ export default function SignIn() {
             : { padding: "3em", width: "100%" }
         }
       >
-        <Typography.Title
-          level={3}
-          style={{ marginBottom: "2em", textAlign: "center" }}
-        >
-          Welcome Back
-        </Typography.Title>
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", marginBottom: "1.5em" }}>
+          <img src="/fintrack.svg" alt="FinTrack Logo" style={{ width: 64, height: 64, marginBottom: "0.5em" }} />
+          <Typography.Title level={2} style={{ margin: 0, fontWeight: 600, background: "linear-gradient(135deg, #0ea5e9 0%, #10b981 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
+            FinTrack
+          </Typography.Title>
+          <Typography.Text type="secondary" style={{ marginTop: "0.25em" }}>
+            Welcome back! Please login to your account.
+          </Typography.Text>
+        </div>
         <Form
           name="login"
           style={{ marginTop: "2em" }}
