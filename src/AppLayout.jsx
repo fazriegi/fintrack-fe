@@ -1,17 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
-import { Button, Layout, Menu, theme } from "antd";
+import { Button, Layout, Menu, theme, Drawer, Grid } from "antd";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import UserDropdown from "./components/container/UserDropdown";
 import { MENU_ITEMS } from "./sidebar-menu";
 import { APP_NAME } from "./pkg/constant";
 
 const { Header, Sider, Content } = Layout;
+const { useBreakpoint } = Grid;
 
 const AppLayout = () => {
   const [collapsed, setCollapsed] = useState(false);
   const {
-    token: { colorBgContainer, borderRadiusLG },
+    token: { colorBgContainer, borderRadiusLG, colorBgBase },
   } = theme.useToken();
 
   const user = JSON.parse(localStorage.getItem("USER") || "null");
@@ -22,57 +23,109 @@ const AppLayout = () => {
 
   const appNameUppercaseOnly = APP_NAME.match(/[A-Z]/g).join('');
 
+  const screens = useBreakpoint();
+  const isMobile = screens.md === false;
+
+  useEffect(() => {
+    if (isMobile) {
+      setCollapsed(true);
+    } else {
+      setCollapsed(false);
+    }
+  }, [isMobile]);
+
+  const brandHeader = (
+    <div
+      style={{
+        height: 64,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: collapsed && !isMobile ? "center" : "space-between",
+        padding: collapsed && !isMobile ? 0 : "0 16px",
+        color: "#fff",
+        fontWeight: 600,
+        fontSize: 18,
+        gap: "12px",
+      }}
+    >
+      <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+        <img src="/fintrack.svg" alt="Logo" style={{ width: 32, height: 32 }} />
+        {(!collapsed || isMobile) && (
+          <span
+            style={{
+              background: "linear-gradient(135deg, #0ea5e9 0%, #10b981 100%)",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+            }}
+          >
+            {APP_NAME}
+          </span>
+        )}
+      </div>
+      {isMobile && (
+        <Button
+          type="text"
+          icon={<MenuFoldOutlined />}
+          onClick={() => setCollapsed(true)}
+          style={{ color: "#fff", fontSize: 16 }}
+        />
+      )}
+    </div>
+  );
+
+  const menuElement = (
+    <Menu
+      theme="dark"
+      mode="inline"
+      selectedKeys={[`/${location.pathname.split("/")[1]}`]}
+      items={MENU_ITEMS.map((items) => ({
+        key: items.key,
+        label: items.label,
+        icon: <items.icon />,
+        element: <items.element />,
+      }))}
+      onClick={({ key }) => {
+        navigate(key);
+        if (isMobile) {
+          setCollapsed(true);
+        }
+      }}
+    />
+  );
+
   return (
     <Layout style={{ minHeight: "100vh" }}>
-      <Sider
-        trigger={null}
-        collapsible
-        collapsed={collapsed}
-        breakpoint="md"
-        collapsedWidth={0}
-        onBreakpoint={(broken) => {
-          setCollapsed(broken);
-        }}
-      >
-        <div
-          style={{
-            height: 64,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: collapsed ? "center" : "flex-start",
-            padding: collapsed ? 0 : "0 16px",
-            color: "#fff",
-            fontWeight: 600,
-            fontSize: 18,
-            gap: "12px",
+      {!isMobile && (
+        <Sider
+          trigger={null}
+          collapsible
+          collapsed={collapsed}
+          breakpoint="md"
+          collapsedWidth={0}
+          onBreakpoint={(broken) => {
+            setCollapsed(broken);
           }}
         >
-          <img src="/fintrack.svg" alt="Logo" style={{ width: 32, height: 32 }} />
-          {!collapsed && (
-            <span
-              style={{
-                background: "linear-gradient(135deg, #0ea5e9 0%, #10b981 100%)",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-              }}
-            >
-              {APP_NAME}
-            </span>
-          )}
-        </div>
-        <Menu
-          theme="dark"
-          mode="inline"
-          selectedKeys={[`/${location.pathname.split("/")[1]}`]}
-          items={MENU_ITEMS.map((items) => ({
-            key: items.key,
-            label: items.label,
-            icon: <items.icon />,
-            element: <items.element />,
-          }))}
-          onClick={({ key }) => navigate(key)}
-        />
-      </Sider>
+          {brandHeader}
+          {menuElement}
+        </Sider>
+      )}
+
+      {isMobile && (
+        <Drawer
+          placement="left"
+          onClose={() => setCollapsed(true)}
+          open={!collapsed}
+          styles={{
+            body: { padding: 0, background: colorBgBase },
+          }}
+          width={220}
+          closable={false}
+        >
+          {brandHeader}
+          {menuElement}
+        </Drawer>
+      )}
 
       <Layout>
         <Header
