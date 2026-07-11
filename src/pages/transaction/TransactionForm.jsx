@@ -29,6 +29,10 @@ export default function TransactionForm({
   const [assets, setAssets] = useState([]);
   const [liabilities, setLiabilities] = useState([]);
 
+  const [selectCategoryOpen, setSelectCategoryOpen] = useState(false);
+  const [selectAssetOpen, setSelectAssetOpen] = useState(false);
+  const [selectLiabilityOpen, setSelectLiabilityOpen] = useState(false);
+
   const [cashflowType, setCashflowType] = useState("income"); // "income" | "expense"
   const [linkType, setLinkType] = useState("none"); // "none" | "asset" | "liability"
 
@@ -215,7 +219,13 @@ export default function TransactionForm({
         >
           <Select
             placeholder="Select category"
-            onChange={handleCategoryChange}
+            open={selectCategoryOpen}
+            onDropdownVisibleChange={setSelectCategoryOpen}
+            onChange={(val) => {
+              handleCategoryChange(val);
+              setSelectCategoryOpen(false);
+            }}
+            getPopupContainer={(triggerNode) => triggerNode.parentNode}
             options={categories
               .filter((c) => c.base_type === cashflowType)
               .map((c) => ({
@@ -249,6 +259,10 @@ export default function TransactionForm({
           >
             <Select
               placeholder="Select active asset"
+              open={selectAssetOpen}
+              onDropdownVisibleChange={setSelectAssetOpen}
+              onChange={() => setSelectAssetOpen(false)}
+              getPopupContainer={(triggerNode) => triggerNode.parentNode}
               options={assets.map((a) => ({
                 label: `${a.name} (${a.category})`,
                 value: a.id,
@@ -265,6 +279,10 @@ export default function TransactionForm({
           >
             <Select
               placeholder="Select active liability"
+              open={selectLiabilityOpen}
+              onDropdownVisibleChange={setSelectLiabilityOpen}
+              onChange={() => setSelectLiabilityOpen(false)}
+              getPopupContainer={(triggerNode) => triggerNode.parentNode}
               options={liabilities.map((l) => ({
                 label: `${l.name} (${l.category})`,
                 value: l.id,

@@ -22,6 +22,7 @@ export default function CategoryDrawer({ open, onClose, onCategoriesUpdated }) {
 
   const [searchText, setSearchText] = useState("");
   const [filterType, setFilterType] = useState("all"); // "all" | "income" | "expense"
+  const [selectFilterOpen, setSelectFilterOpen] = useState(false);
 
   const fetchCategories = async () => {
     setLoading(true);
@@ -143,8 +144,14 @@ export default function CategoryDrawer({ open, onClose, onCategoriesUpdated }) {
         />
         <Select
           value={filterType}
-          onChange={(val) => setFilterType(val)}
+          open={selectFilterOpen}
+          onDropdownVisibleChange={setSelectFilterOpen}
+          onChange={(val) => {
+            setFilterType(val);
+            setSelectFilterOpen(false);
+          }}
           style={{ width: "120px" }}
+          getPopupContainer={(triggerNode) => triggerNode.parentNode}
           options={[
             { label: "All Types", value: "all" },
             { label: "Income", value: "income" },

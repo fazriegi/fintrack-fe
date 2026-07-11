@@ -8,10 +8,15 @@ export default function InputSelect({
   datasource = "",
   payload = {},
   listOptions = [],
+  onChange,
+  onDropdownVisibleChange,
+  getPopupContainer,
+  open: customOpen,
   ...props
 }) {
   const [options, setOptions] = useState(listOptions);
   const [loading, setLoading] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const fetchOptions = async () => {
     setLoading(true);
@@ -52,11 +57,29 @@ export default function InputSelect({
     }
   }, [listOptions]);
 
+  const handleDropdownVisibleChange = (openVal) => {
+    setDropdownOpen(openVal);
+    if (onDropdownVisibleChange) {
+      onDropdownVisibleChange(openVal);
+    }
+  };
+
+  const handleChange = (val, option) => {
+    setDropdownOpen(false);
+    if (onChange) {
+      onChange(val, option);
+    }
+  };
+
   return (
     <Select
       loading={loading}
       showSearch={{ optionFilterProp: "label" }}
       options={options}
+      open={customOpen !== undefined ? customOpen : dropdownOpen}
+      onDropdownVisibleChange={handleDropdownVisibleChange}
+      onChange={handleChange}
+      getPopupContainer={getPopupContainer || ((triggerNode) => triggerNode.parentNode)}
       {...props}
     />
   );
