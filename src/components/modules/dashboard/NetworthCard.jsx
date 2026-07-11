@@ -1,4 +1,4 @@
-import { Card, Button, Space, Typography, Tooltip } from "antd";
+import { Card, Button, Space, Typography, Tooltip, Grid } from "antd";
 import {
   EyeOutlined,
   EyeInvisibleOutlined,
@@ -19,6 +19,9 @@ export default function NetworthCard({
   const growth =
     data?.growth_percentage != null ? Number(data.growth_percentage) : 0;
 
+  const screens = Grid.useBreakpoint();
+  const isMobile = !screens.sm;
+
   let status = "neutral";
   if (growth > 0) status = "positive";
   else if (growth < 0) status = "negative";
@@ -38,9 +41,10 @@ export default function NetworthCard({
       <Card
         loading={loading}
         variant="borderless"
+        styles={{ body: { padding: isMobile ? "12px 16px" : "24px" } }}
         style={{
           background: "linear-gradient(180deg, #1c3d5a 0%, #0d1e2d 100%)",
-          height: 150,
+          height: isMobile ? 120 : 150,
           position: "relative",
           overflow: "hidden",
           borderRadius: 12,
@@ -65,14 +69,14 @@ export default function NetworthCard({
           style={{
             position: "relative",
             zIndex: 1,
-            marginTop: 4,
+            marginTop: isMobile ? 0 : 4,
             paddingRight: 32,
           }}
         >
           <span
             style={{
               display: "block",
-              fontSize: 14,
+              fontSize: isMobile ? 12 : 14,
               fontWeight: "600",
               textTransform: "uppercase",
               color: "#8b9bb4",
@@ -89,8 +93,8 @@ export default function NetworthCard({
           >
             <h1
               style={{
-                margin: "4px 0 8px 0",
-                fontSize: 32,
+                margin: isMobile ? "2px 0 4px 0" : "4px 0 8px 0",
+                fontSize: isMobile ? 24 : 32,
                 color: "white",
                 fontWeight: "bold",
                 whiteSpace: "nowrap",
@@ -114,12 +118,11 @@ export default function NetworthCard({
                 alignItems: "center",
                 gap: "4px",
                 fontWeight: "bold",
-                fontSize: "14px",
+                fontSize: isMobile ? "11px" : "14px",
               }}
             >
               {status === "positive" && <ArrowUpOutlined />}
               {status === "negative" && <ArrowDownOutlined />}
-              {/* {status === "neutral" && <MinusOutlined />} */}
               <span>
                 {status === "positive" ? "+" : ""}
                 {growth.toFixed(1)}%
@@ -127,7 +130,7 @@ export default function NetworthCard({
             </div>
             <Text
               type="secondary"
-              style={{ fontSize: "14px", color: "#8b9bb4" }}
+              style={{ fontSize: isMobile ? "11px" : "14px", color: "#8b9bb4" }}
             >
               vs last month
             </Text>

@@ -2,16 +2,15 @@ import { useState, useMemo, useEffect } from "react";
 import {
   Button,
   Card,
-  Statistic,
   Row,
   Col,
   Segmented,
   DatePicker,
-  Table,
   Space,
   Tag,
   Popconfirm,
   App,
+  Grid,
 } from "antd";
 import {
   PlusOutlined,
@@ -193,6 +192,9 @@ export default function TransactionPage() {
     },
   ];
 
+  const screens = Grid.useBreakpoint();
+  const isMobile = !screens.sm;
+
   const netStats = useMemo(() => {
     let color = "#ffffff";
     let prefix = "";
@@ -221,6 +223,7 @@ export default function TransactionPage() {
         <Col xs={24} sm={8}>
           <Card
             bordered={false}
+            styles={{ body: { padding: isMobile ? "12px 16px" : "24px" } }}
             style={{
               background: "linear-gradient(180deg, #1d432b 0%, #0f2417 100%)",
               borderRadius: 12,
@@ -239,7 +242,7 @@ export default function TransactionPage() {
                 boxShadow: "0 0 8px rgba(16, 185, 129, 0.5)",
               }}
             />
-            <div style={{ padding: "8px 0" }}>
+            <div style={{ padding: isMobile ? "0" : "8px 0" }}>
               <span
                 style={{
                   display: "block",
@@ -254,8 +257,8 @@ export default function TransactionPage() {
               </span>
               <h1
                 style={{
-                  margin: "8px 0 0 0",
-                  fontSize: 28,
+                  margin: "4px 0 0 0",
+                  fontSize: isMobile ? 22 : 28,
                   color: "#10b981",
                   fontWeight: "bold",
                   whiteSpace: "nowrap",
@@ -273,6 +276,7 @@ export default function TransactionPage() {
         <Col xs={24} sm={8}>
           <Card
             bordered={false}
+            styles={{ body: { padding: isMobile ? "12px 16px" : "24px" } }}
             style={{
               background: "linear-gradient(180deg, #5c2424 0%, #2b1111 100%)",
               borderRadius: 12,
@@ -291,7 +295,7 @@ export default function TransactionPage() {
                 boxShadow: "0 0 8px rgba(255, 77, 79, 0.5)",
               }}
             />
-            <div style={{ padding: "8px 0" }}>
+            <div style={{ padding: isMobile ? "0" : "8px 0" }}>
               <span
                 style={{
                   display: "block",
@@ -306,8 +310,8 @@ export default function TransactionPage() {
               </span>
               <h1
                 style={{
-                  margin: "8px 0 0 0",
-                  fontSize: 28,
+                  margin: "4px 0 0 0",
+                  fontSize: isMobile ? 22 : 28,
                   color: "#ff4d4f",
                   fontWeight: "bold",
                   whiteSpace: "nowrap",
@@ -325,6 +329,7 @@ export default function TransactionPage() {
         <Col xs={24} sm={8}>
           <Card
             bordered={false}
+            styles={{ body: { padding: isMobile ? "12px 16px" : "24px" } }}
             style={{
               background: "linear-gradient(180deg, #1c3d5a 0%, #0d1e2d 100%)",
               borderRadius: 12,
@@ -343,7 +348,7 @@ export default function TransactionPage() {
                 boxShadow: `0 0 8px ${netStats.glow}`,
               }}
             />
-            <div style={{ padding: "8px 0" }}>
+            <div style={{ padding: isMobile ? "0" : "8px 0" }}>
               <span
                 style={{
                   display: "block",
@@ -358,8 +363,8 @@ export default function TransactionPage() {
               </span>
               <h1
                 style={{
-                  margin: "8px 0 0 0",
-                  fontSize: 28,
+                  margin: "4px 0 0 0",
+                  fontSize: isMobile ? 22 : 28,
                   color: netStats.color,
                   fontWeight: "bold",
                   whiteSpace: "nowrap",
@@ -379,22 +384,24 @@ export default function TransactionPage() {
       <div
         style={{
           display: "flex",
+          flexDirection: isMobile ? "column" : "row",
           justifyContent: "space-between",
-          alignItems: "center",
-          marginBottom: "1em",
-          flexWrap: "wrap",
-          gap: "1em",
+          alignItems: isMobile ? "stretch" : "center",
+          marginBottom: "1.5em",
+          gap: "12px",
         }}
       >
         <div
           style={{
             display: "flex",
-            alignItems: "center",
+            flexDirection: isMobile ? "column" : "row",
+            alignItems: isMobile ? "stretch" : "center",
             gap: "12px",
-            flexWrap: "wrap",
+            width: isMobile ? "100%" : "auto",
           }}
         >
           <Segmented
+            block={isMobile}
             options={[
               { label: "Week", value: "week" },
               { label: "Month", value: "month" },
@@ -413,6 +420,7 @@ export default function TransactionPage() {
                 value={selectedRange}
                 onChange={(dates) => setSelectedRange(dates)}
                 allowClear={false}
+                style={{ width: "100%" }}
               />
             ) : (
               <DatePicker
@@ -420,12 +428,20 @@ export default function TransactionPage() {
                 value={selectedDate}
                 onChange={(date) => setSelectedDate(date)}
                 allowClear={false}
+                style={{ width: "100%" }}
               />
             ))}
         </div>
 
-        <div style={{ display: "flex", gap: "8px" }}>
+        <div
+          style={{
+            display: "flex",
+            gap: "8px",
+            width: isMobile ? "100%" : "auto",
+          }}
+        >
           <Button
+            style={{ flex: isMobile ? 1 : "none" }}
             icon={<SettingOutlined />}
             onClick={() => setCategoryOpen(true)}
           >
@@ -433,6 +449,7 @@ export default function TransactionPage() {
           </Button>
           <Button
             type="primary"
+            style={{ flex: isMobile ? 1 : "none" }}
             icon={<PlusOutlined />}
             onClick={() => {
               setSelectedTxId(null);

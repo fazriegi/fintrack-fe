@@ -1,17 +1,21 @@
-import { Card, Button, Tooltip } from "antd";
+import { Card, Button, Tooltip, Grid } from "antd";
 import { EyeOutlined, EyeInvisibleOutlined } from "@ant-design/icons";
 import numeral from "numeral";
 import React from "react";
 
 export default function AssetCard({ showValue, setShowValue, data, loading }) {
+  const screens = Grid.useBreakpoint();
+  const isMobile = !screens.sm;
+
   return (
     <>
       <Card
         loading={loading}
         variant="borderless"
+        styles={{ body: { padding: isMobile ? "12px 16px" : "24px" } }}
         style={{
           background: "linear-gradient(180deg, #244b4d 0%, #152b2c 100%)",
-          height: 150,
+          height: isMobile ? 120 : 150,
           position: "relative",
           overflow: "hidden",
           borderRadius: 12,
@@ -20,7 +24,7 @@ export default function AssetCard({ showValue, setShowValue, data, loading }) {
         <div
           style={{
             position: "absolute",
-            bottom: 24,
+            bottom: isMobile ? 12 : 24,
             left: 0,
             right: 0,
             height: "4px",
@@ -48,14 +52,14 @@ export default function AssetCard({ showValue, setShowValue, data, loading }) {
           style={{
             position: "relative",
             zIndex: 1,
-            marginTop: 12,
+            marginTop: isMobile ? 0 : 12,
             paddingRight: 32,
           }}
         >
           <span
             style={{
               display: "block",
-              fontSize: 14,
+              fontSize: isMobile ? 12 : 14,
               fontWeight: "600",
               textTransform: "uppercase",
               color: "#8aa6a3",
@@ -75,7 +79,7 @@ export default function AssetCard({ showValue, setShowValue, data, loading }) {
             <h1
               style={{
                 margin: "4px 0 0 0",
-                fontSize: 32,
+                fontSize: isMobile ? 24 : 32,
                 color: "white",
                 fontWeight: "bold",
                 whiteSpace: "nowrap",

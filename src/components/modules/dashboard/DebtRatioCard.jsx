@@ -1,23 +1,25 @@
-import { Card, Progress } from "antd";
+import { Card, Progress, Grid } from "antd";
 import React, { useEffect, useState, useRef } from "react";
 
 export default function DebtRatioCard({ data, loading }) {
   const containerRef = useRef(null);
   const [progressSize, setProgressSize] = useState(140);
 
+  const screens = Grid.useBreakpoint();
+  const isMobile = !screens.sm;
+
   useEffect(() => {
     if (!containerRef.current) return;
     const observer = new ResizeObserver((entries) => {
       for (let entry of entries) {
-        // Container width minus some safe margin
         const width = entry.contentRect.width;
-        // Set size to fit container width, capped at 140px max
-        setProgressSize(Math.min(140, Math.max(60, width)));
+        const maxCircleSize = isMobile ? 85 : 140;
+        setProgressSize(Math.min(maxCircleSize, Math.max(60, width)));
       }
     });
     observer.observe(containerRef.current);
     return () => observer.disconnect();
-  }, []);
+  }, [isMobile]);
 
   // Calculate ratio
   const ratio =
@@ -46,18 +48,18 @@ export default function DebtRatioCard({ data, loading }) {
         variant="borderless"
         style={{
           background: "linear-gradient(180deg, #1e2532 0%, #11161d 100%)",
-          height: 150,
+          height: isMobile ? 120 : 150,
           position: "relative",
           overflow: "hidden",
           borderRadius: 12,
         }}
-        styles={{ body: { padding: "16px 12px" } }}
+        styles={{ body: { padding: isMobile ? "12px 16px" : "16px 12px" } }}
       >
         <div style={{ position: "relative", zIndex: 1 }}>
           <span
             style={{
               display: "block",
-              fontSize: 14,
+              fontSize: isMobile ? 12 : 14,
               fontWeight: "600",
               textTransform: "uppercase",
               color: "#8b9bb4",
@@ -71,7 +73,7 @@ export default function DebtRatioCard({ data, loading }) {
             style={{
               display: "flex",
               justifyContent: "center",
-              marginTop: 10,
+              marginTop: isMobile ? 2 : 10,
               width: "100%",
             }}
           >
