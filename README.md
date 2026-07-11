@@ -4,7 +4,6 @@
 
 FinTrack FE is a frontend application for managing assets, liabilities, and personal finance tracking with a minimalist and user-friendly interface.
 
-
 ## Technology Stack
 
 `JavaScript` `React`
@@ -64,6 +63,7 @@ Make sure you have [Docker](https://docs.docker.com/get-docker/) and [Docker Com
 ### Steps to Run
 
 1. **Copy `.env.example` to `.env`:**
+
    ```bash
    cp .env.example .env
    ```
@@ -72,20 +72,24 @@ Make sure you have [Docker](https://docs.docker.com/get-docker/) and [Docker Com
    Adjust `VITE_BASE_URL` (points to the backend API), `VITE_APP_NAME`, and `PORT` (the port on your host machine to access the frontend, default: `3000`).
 
 3. **Build and start the container:**
+
    ```bash
    docker compose up --build -d
    ```
-   *Note: This will read the `.env` variables, pass them as build arguments to compile the production static files, and serve them via a lightweight Nginx container.*
+
+   _Note: This will read the `.env` variables, pass them as build arguments to compile the production static files, and serve them via a lightweight Nginx container._
 
 4. **Access the application:**
    Open your browser and navigate to `http://localhost:<PORT>` (e.g. `http://localhost:3000`).
 
 5. **Check container status:**
+
    ```bash
    docker compose ps
    ```
 
 6. **View logs:**
+
    ```bash
    docker compose logs -f
    ```
