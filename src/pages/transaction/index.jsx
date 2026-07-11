@@ -193,45 +193,184 @@ export default function TransactionPage() {
     },
   ];
 
+  const netStats = useMemo(() => {
+    let color = "#ffffff";
+    let prefix = "";
+    let glow = "rgba(255, 255, 255, 0.3)";
+
+    if (stats.net > 0) {
+      color = "#10b981";
+      prefix = "+";
+      glow = "rgba(16, 185, 129, 0.5)";
+    } else if (stats.net < 0) {
+      color = "#ff4d4f";
+      prefix = "";
+      glow = "rgba(255, 77, 79, 0.5)";
+    }
+
+    return { color, prefix, glow };
+  }, [stats.net]);
+
   return (
     <>
       <PageHeader breadCrumb={["Cashflow"]} />
 
       {/* Summary Cards */}
       <Row gutter={[16, 16]} style={{ marginBottom: "1.5em" }}>
+        {/* Total Income */}
         <Col xs={24} sm={8}>
-          <Card bordered={false} style={{ borderRadius: "8px" }}>
-            <Statistic
-              title="Total Income"
-              value={stats.income}
-              precision={0}
-              valueStyle={{ color: "#3f8600" }}
-              formatter={(val) => numeral(val).format("0,0")}
+          <Card
+            bordered={false}
+            style={{
+              background: "linear-gradient(180deg, #1d432b 0%, #0f2417 100%)",
+              borderRadius: 12,
+              position: "relative",
+              overflow: "hidden",
+            }}
+          >
+            <div
+              style={{
+                position: "absolute",
+                bottom: 0,
+                left: 0,
+                right: 0,
+                height: "4px",
+                backgroundColor: "#10b981",
+                boxShadow: "0 0 8px rgba(16, 185, 129, 0.5)",
+              }}
             />
+            <div style={{ padding: "8px 0" }}>
+              <span
+                style={{
+                  display: "block",
+                  fontSize: 12,
+                  fontWeight: "600",
+                  textTransform: "uppercase",
+                  color: "#8abea1",
+                  letterSpacing: "0.5px",
+                }}
+              >
+                Total Income
+              </span>
+              <h1
+                style={{
+                  margin: "8px 0 0 0",
+                  fontSize: 28,
+                  color: "#10b981",
+                  fontWeight: "bold",
+                  whiteSpace: "nowrap",
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                }}
+              >
+                Rp {numeral(stats.income).format("0,0")}
+              </h1>
+            </div>
           </Card>
         </Col>
+
+        {/* Total Expense */}
         <Col xs={24} sm={8}>
-          <Card bordered={false} style={{ borderRadius: "8px" }}>
-            <Statistic
-              title="Total Expense"
-              value={stats.expense}
-              precision={0}
-              valueStyle={{ color: "#cf1322" }}
-              formatter={(val) => numeral(val).format("0,0")}
+          <Card
+            bordered={false}
+            style={{
+              background: "linear-gradient(180deg, #5c2424 0%, #2b1111 100%)",
+              borderRadius: 12,
+              position: "relative",
+              overflow: "hidden",
+            }}
+          >
+            <div
+              style={{
+                position: "absolute",
+                bottom: 0,
+                left: 0,
+                right: 0,
+                height: "4px",
+                backgroundColor: "#ff4d4f",
+                boxShadow: "0 0 8px rgba(255, 77, 79, 0.5)",
+              }}
             />
+            <div style={{ padding: "8px 0" }}>
+              <span
+                style={{
+                  display: "block",
+                  fontSize: 12,
+                  fontWeight: "600",
+                  textTransform: "uppercase",
+                  color: "#b38c8c",
+                  letterSpacing: "0.5px",
+                }}
+              >
+                Total Expense
+              </span>
+              <h1
+                style={{
+                  margin: "8px 0 0 0",
+                  fontSize: 28,
+                  color: "#ff4d4f",
+                  fontWeight: "bold",
+                  whiteSpace: "nowrap",
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                }}
+              >
+                Rp {numeral(stats.expense).format("0,0")}
+              </h1>
+            </div>
           </Card>
         </Col>
+
+        {/* Net Cashflow */}
         <Col xs={24} sm={8}>
-          <Card bordered={false} style={{ borderRadius: "8px" }}>
-            <Statistic
-              title="Net Cashflow"
-              value={stats.net}
-              precision={0}
-              valueStyle={{ color: stats.net >= 0 ? "#3f8600" : "#cf1322" }}
-              formatter={(val) =>
-                `${val >= 0 ? "+" : ""}${numeral(val).format("0,0")}`
-              }
+          <Card
+            bordered={false}
+            style={{
+              background: "linear-gradient(180deg, #1c3d5a 0%, #0d1e2d 100%)",
+              borderRadius: 12,
+              position: "relative",
+              overflow: "hidden",
+            }}
+          >
+            <div
+              style={{
+                position: "absolute",
+                bottom: 0,
+                left: 0,
+                right: 0,
+                height: "4px",
+                backgroundColor: netStats.color,
+                boxShadow: `0 0 8px ${netStats.glow}`,
+              }}
             />
+            <div style={{ padding: "8px 0" }}>
+              <span
+                style={{
+                  display: "block",
+                  fontSize: 12,
+                  fontWeight: "600",
+                  textTransform: "uppercase",
+                  color: "#8b9bb4",
+                  letterSpacing: "0.5px",
+                }}
+              >
+                Net Cashflow
+              </span>
+              <h1
+                style={{
+                  margin: "8px 0 0 0",
+                  fontSize: 28,
+                  color: netStats.color,
+                  fontWeight: "bold",
+                  whiteSpace: "nowrap",
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                }}
+              >
+                Rp {netStats.prefix}
+                {numeral(stats.net).format("0,0")}
+              </h1>
+            </div>
           </Card>
         </Col>
       </Row>
