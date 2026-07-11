@@ -16,10 +16,7 @@ export default function SignIn() {
   const onFinish = async (formData) => {
     setIsSubmit(true);
     try {
-      const response = await api.post("/v1/login", {
-        email: formData.email,
-        password: formData.password,
-      });
+      const response = await api.post("/v1/login", formData);
 
       const respBody = response?.data;
 
@@ -49,9 +46,29 @@ export default function SignIn() {
             : { padding: "3em", width: "100%" }
         }
       >
-        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", marginBottom: "1.5em" }}>
-          <img src="/fintrack.svg" alt="FinTrack Logo" style={{ width: 64, height: 64, marginBottom: "0.5em" }} />
-          <Typography.Title level={2} style={{ margin: 0, fontWeight: 600, background: "linear-gradient(135deg, #0ea5e9 0%, #10b981 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            marginBottom: "1.5em",
+          }}
+        >
+          <img
+            src="/fintrack.svg"
+            alt="FinTrack Logo"
+            style={{ width: 64, height: 64, marginBottom: "0.5em" }}
+          />
+          <Typography.Title
+            level={2}
+            style={{
+              margin: 0,
+              fontWeight: 600,
+              background: "linear-gradient(135deg, #0ea5e9 0%, #10b981 100%)",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+            }}
+          >
             FinTrack
           </Typography.Title>
           <Typography.Text type="secondary" style={{ marginTop: "0.25em" }}>
@@ -66,11 +83,11 @@ export default function SignIn() {
           form={form}
         >
           <Form.Item
-            label="Email"
-            name="email"
-            rules={[{ required: true, message: "Please input your email!" }]}
+            label="Username"
+            name="username"
+            rules={[{ required: true, message: "Username required!" }]}
           >
-            <Input type="email" />
+            <Input />
           </Form.Item>
           <Form.Item
             label="Password"

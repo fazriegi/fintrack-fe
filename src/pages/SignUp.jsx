@@ -45,9 +45,29 @@ export default function SignUp() {
             : { padding: "3em", width: "100%" }
         }
       >
-        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", marginBottom: "1.5em" }}>
-          <img src="/fintrack.svg" alt="FinTrack Logo" style={{ width: 64, height: 64, marginBottom: "0.5em" }} />
-          <Typography.Title level={2} style={{ margin: 0, fontWeight: 600, background: "linear-gradient(135deg, #0ea5e9 0%, #10b981 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            marginBottom: "1.5em",
+          }}
+        >
+          <img
+            src="/fintrack.svg"
+            alt="FinTrack Logo"
+            style={{ width: 64, height: 64, marginBottom: "0.5em" }}
+          />
+          <Typography.Title
+            level={2}
+            style={{
+              margin: 0,
+              fontWeight: 600,
+              background: "linear-gradient(135deg, #0ea5e9 0%, #10b981 100%)",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+            }}
+          >
             FinTrack
           </Typography.Title>
           <Typography.Text type="secondary" style={{ marginTop: "0.25em" }}>
@@ -69,13 +89,13 @@ export default function SignUp() {
             <Input type="text" />
           </Form.Item>
           <Form.Item
-            label="Email"
-            name="email"
-            rules={[
-              { required: true, message: "Please input your email!" },
-              { type: "email", message: "Invalid email" },
-            ]}
+            label="Username"
+            name="username"
+            rules={[{ required: true, message: "Please input your username!" }]}
           >
+            <Input type="text" />
+          </Form.Item>
+          <Form.Item label="Email" name="email">
             <Input type="email" />
           </Form.Item>
           <Form.Item

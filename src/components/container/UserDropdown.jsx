@@ -66,7 +66,7 @@ export default function UserDropdown() {
           <Text strong>{user?.full_name || "User"}</Text>
           <br />
           <Text type="secondary" style={{ fontSize: 12 }}>
-            {user?.email || ""}
+            {user?.username ? `@${user.username}` : (user?.email || "")}
           </Text>
         </div>
       </Space>
